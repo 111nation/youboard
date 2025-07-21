@@ -13,3 +13,9 @@
 	align-items: center;
 	padding: 0.5em 0;
 }
+
+.navbar .icon {
+	aspect-ratio: 1/1;
+	width: 3em;
+	box-sizing: border-box;
+}
