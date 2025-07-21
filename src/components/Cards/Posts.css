@@ -1,0 +1,36 @@
+.posts-container {
+	padding: 0.75em;
+	box-sizing: border-box;
+	width: 100vw;
+	overflow-x: hidden;
+	overflow-y: auto;
+
+	column-count: 2;
+	gap: 0.6em;
+}
+
+.post-card:nth-child(4n + 1) {
+  height: 300px;
+}
+
+.post-card:nth-child(4n + 2) {
+  height: 175px;
+}
+
+.post-card:nth-child(4n + 3) {
+  height: 750px;
+}
+
+.post-card:nth-child(4n + 4) {
+  height: 220px;
+}
+
+.post-card {
+	display: inline-block;
+	margin: 0;
+	box-sizing: border-box;
+	width: 100%;
+	background: #696969;
+	border-radius: 12px;
+	margin-bottom: 0.4em;
+}

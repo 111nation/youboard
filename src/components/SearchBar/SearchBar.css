@@ -1,0 +1,30 @@
+.searchbar {
+	box-sizing: border-box;
+	width: 100vw;
+	margin: 0 auto;
+	border: none;
+	padding: 1em 1.5em;
+	background: #292B2C;
+	border-top: 0.8px solid rgba(105, 105, 105, 0.7);
+	border-bottom: 0.8px solid rgba(105, 105, 105, 0.7);
+	color: #F9F9F9;
+	font-weight: 400;
+	transition: 0.15s ease-out;
+}
+
+.searchbar::placeholder {
+	color: rgba(105, 105, 105, 1);
+	font-weight: 300;
+}
+
+.searchbar:focus {
+	outline: none;
+	border-top: 1.2px solid rgba(105, 105, 105, 1);
+	border-bottom: 1.2px solid rgba(105, 105, 105, 1);
+}
+
+.searchbar:focus::placeholder {
+	font-weight: 400;
+}
+
+

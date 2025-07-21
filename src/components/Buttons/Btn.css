@@ -1,0 +1,73 @@
+.btn {
+	background: #292B2C;
+	border: none;
+	padding: 0.5em 1.25em;
+	border-radius: 0.25rem;
+	transition: 0.1s ease-out;
+}
+
+.btn:focus {
+	font-weight: 600;	
+	background: #FF0044;
+	color: #121212;
+}
+
+.follow-btn {
+	color: #FF0044;
+	background: none;
+	border-radius: 0.25rem;
+	border:none;
+	border: 0.15rem solid #FF0044;
+	padding: 0.45em 1.4em;
+	border-radius: 0.25rem;
+	font-weight: 750;
+	box-sizing: none;
+	transition: 0.1s ease-out;
+}
+
+.follow-btn:focus, .unfollow-btn {
+	color: #F9F9F9;
+	background: #FF0044;
+	font-weight: 600;
+}
+
+.visit-btn {
+	color: #121212;
+	background: #F9F9F9;
+	border: none;
+	padding: 0.5em 1.5em;
+	border-radius: 0.25rem;
+	font-weight: 450;
+}
+
+.save-btn {
+	background: #F81B1F;
+	color: #121212;
+	border: none;
+	padding: 0.5em 1.2em;
+	border-radius: 0.25rem;
+	font-weight: 600;
+	font-size: 1.2rem;
+	transition: 0.25s ease-out;
+}
+
+.save-btn:focus {
+	color: #F9F9F9;
+}
+
+.back-btn {
+	aspect-ratio: 1/1;
+	width: 12vw;
+	position: fixed;
+	top: 2vh;
+	left: 2vw;
+	z-index: 1000;
+	border:none;
+	border-radius: 7px;
+}
+
+.back-btn:focus {
+	outline:none;
+}
+
+

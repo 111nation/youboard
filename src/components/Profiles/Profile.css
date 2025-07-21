@@ -1,0 +1,36 @@
+.handle {
+	font-weight: 700;
+	margin: 0;
+}
+
+.follower-count {
+	font-weight: 300;
+	margin: 0;
+}
+
+.big-profile-wrap {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	margin: auto;
+	box-sizing: border-box;
+	margin: 0;
+}
+
+.big-profile-wrap .profile {
+	border-radius: 50%;
+	background: #F9F9F9;
+	width: 6em;
+	aspect-ratio: 1/1;
+	margin: 0;
+}
+
+.big-profile-wrap .handle {
+	margin: 0.5em 0 0.2em;
+	font-size: 1.2rem;
+}
+
+.big-profile-wrap .follower-count {
+	font-size: 0.85rem;
+}
