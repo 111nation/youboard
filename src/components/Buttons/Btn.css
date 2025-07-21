@@ -64,10 +64,28 @@
 	z-index: 1000;
 	border:none;
 	border-radius: 7px;
+
+	overflow: hidden;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.back-btn .icon {
+	stroke: #121212;
+	width: 120%;
+	aspect-ratio: 1/1;
+	box-sizing: border-box;
+	transition: 0.3s ease-out;
 }
 
 .back-btn:focus {
 	outline:none;
+}
+
+.back-btn:active .icon {
+	stroke: #FF0048;
 }
 
 
