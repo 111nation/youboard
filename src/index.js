@@ -25,21 +25,8 @@ import SmallProfile from "./components/Profiles/SmallProfile";
 
 function App() {
 	return (<>
-		<Home />
-		<SearchBar /> 
-		<HomeBar />
-		<Search />
-		<PostView />
-		<Profile />
-		<FollowList />
-		<BigProfile />
-		<SmallProfile />
-		<Btn>Button</Btn>
-		<FollowBtn />
-		<VisitBtn />
-		<SaveBtn />
 		<BackBtn />
-		<Posts />
+		<SaveBar />
 	</>);
 }
 

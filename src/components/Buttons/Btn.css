@@ -33,11 +33,33 @@
 
 .visit-btn {
 	color: #121212;
+	stroke: #121212;
+	stroke-width: 1.5;
 	background: #F9F9F9;
 	border: none;
-	padding: 0.5em 1.5em;
+	padding: 0.5em 1.25em;
 	border-radius: 0.25rem;
 	font-weight: 450;
+	font-size: 0.9em;
+
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	transition: 0.3s ease-out;
+}
+
+.visit-btn .icon {
+	height: 1.2em;
+	aspect-ratio: 1/1;
+	display: inline-block;
+	margin-left: 0.25em;
+	transition: 0.3s ease-out;
+}
+
+.visit-btn:focus {
+	stroke: #FF0048;
+	color: #FF0048;
+	outline: none;
 }
 
 .save-btn {
@@ -70,6 +92,8 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	opacity: 0.95;
 }
 
 .back-btn .icon {
