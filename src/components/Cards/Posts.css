@@ -3,7 +3,7 @@
 	box-sizing: border-box;
 	width: 100vw;
 	overflow-x: hidden;
-	overflow-y: auto;
+	overflow-y: scroll;
 
 	column-count: 2;
 	gap: 0.6em;

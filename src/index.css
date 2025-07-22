@@ -29,3 +29,19 @@ body {
 	color: rgba(255, 0, 72, 0.82);
 	font-size: 0.85rem;
 }
+
+.page {
+	height: 100vh;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: none;
+}
+
+.page .top-bar {
+	position: sticky;
+	top:0;
+	left:0;
+	background: #121212;
+}
+

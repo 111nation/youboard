@@ -4,9 +4,15 @@
 	padding: 0.5em 1.25em;
 	border-radius: 0.25rem;
 	transition: 0.1s ease-out;
+	max-width: 60vw;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-wrap: nowrap;
+	transition: 0.1s ease-out;
 }
 
-.btn:focus {
+.btn:active, .btn.active {
 	font-weight: 600;	
 	background: #FF0044;
 	color: #121212;

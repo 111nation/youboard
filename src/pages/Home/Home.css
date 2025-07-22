@@ -1,0 +1,13 @@
+.home-page {
+	padding-bottom: 5rem;
+}
+
+.home-page .tab {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0.75em 0.75em;
+
+	display: flex;
+	justify-content: space-around;
+	align-content: center;
+}
