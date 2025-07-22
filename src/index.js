@@ -21,11 +21,13 @@ import HomeBar from "./components/NavBars/HomeBar";
 import Posts from "./components/Cards/Posts";
 import BigProfile from "./components/Profiles/BigProfile";
 import SmallProfile from "./components/Profiles/SmallProfile";
+import Post from "./components/Post/Post";
 
 
 function App() {
 	return (<>
 		<BackBtn />
+		<Post />
 		<SaveBar />
 	</>);
 }

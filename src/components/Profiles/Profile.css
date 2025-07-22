@@ -67,3 +67,22 @@
 .small-profile-wrap:focus, .small-profile-wrap:active {
 	background: rgba(41, 43, 44, 0.7);
 }
+
+.user-info-wrap {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.user-info-wrap .profile {
+	width: 15vw;
+	margin-right: 0.7em;
+}
+
+.user-info-wrap .handle {
+	font-size: 1rem;
+}
+
+.user-info-wrap .follower-count {
+	font-size: 0.8rem;
+}

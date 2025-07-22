@@ -1,0 +1,58 @@
+.post-wrap {
+	width: 100vw;
+	box-sizing: border-box;
+	padding: 0;
+	padding-bottom: 3em;
+	margin: 0;
+
+	overflow-y: scroll;
+
+	border-bottom: 1px solid rgba(41, 43, 44, 0.5);
+}
+
+.post-wrap .img-wrap {
+	position: relative;
+}
+
+.post-wrap .post-img {
+	display: block;
+	box-sizing: border-box;
+	width: 100%;
+	height: 300px;
+	padding: 0;
+	margin: 0;
+	background: #696969;
+	border: none;
+	outline: none;
+	box-shadow: none;
+	color: transparent;
+}
+
+.post-wrap .visit-btn {
+	position: absolute;
+	right: 3vw;
+	bottom: 0.7em;
+	box-shadow: 0 0 2px 0px rgba(0,0,0,0.5);
+	transition: 0.3s ease-out;
+}
+
+.post-wrap .visit-btn:focus {
+	box-shadow: 0 0 5px 0px rgba(0,0,0,0.5);
+}
+
+.post-wrap .user-info {
+	padding: 0.75em 0.7em;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.post-desc {
+	margin: 0;
+	padding: 0.2em 0.7em;
+}
+
+.post-desc p {
+	margin: 0;
+}
