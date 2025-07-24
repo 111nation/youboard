@@ -2,11 +2,11 @@ import React from "react";
 import ReactDOM from 'react-dom/client';
 
 import "./index.css";
-// Pages
-import Search from "./pages/Search/Search";
+import PostView from "./pages/PostView/PostView";
+
 function App() {
 	return (<>
-		<Search />
+		<PostView />
 	</>);
 }
 

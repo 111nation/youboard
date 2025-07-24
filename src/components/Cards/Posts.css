@@ -18,7 +18,7 @@
 }
 
 .post-card:nth-child(4n + 3) {
-  height: 750px;
+  height: 300px;
 }
 
 .post-card:nth-child(4n + 4) {

@@ -1,0 +1,17 @@
+.followlist-wrap {
+	padding-left: 0.7em;
+	padding-bottom: 40vw;
+}
+
+.followlist-wrap .heading {
+	position: sticky;
+	top: 0;
+	left: 0.7em;
+	background: #121212;
+}
+
+.heading {
+	margin: 0;
+	padding: 1rem 0;
+	padding-left: 0.2em;
+}

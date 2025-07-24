@@ -31,7 +31,7 @@
 	transition: 0.1s ease-out;
 }
 
-.follow-btn:focus, .unfollow-btn {
+.follow-btn:active, .unfollow-btn {
 	color: #F9F9F9;
 	background: #FF0044;
 	font-weight: 600;

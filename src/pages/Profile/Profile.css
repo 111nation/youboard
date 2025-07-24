@@ -1,0 +1,17 @@
+.profile-info-wrap {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 3vh 0 2vh 0;
+
+	position: sticky;
+	top: -2vh;
+	left: 0;
+
+	background: #121212;
+}
+
+.profile-info-wrap .follow-btn {
+	margin-top: 1.4em;
+}
