@@ -25,6 +25,12 @@ _Various stages done in order to create the UI and UX experience_
 
 <tr>
   <td width="50%"><img alt="2025-07-18-212935_hyprshot" src="https://github.com/user-attachments/assets/7d2c7cf5-3fa7-405f-a06d-4c7814f2e275" /></td>
+  <td>Final Figma Design: Result is a beautiful UI design.</td>
 </tr>
 </table>
 
+### First Viral Post?
+
+_Seems like the X algorithm really liked my designs!_
+<br />
+<img width="50%" alt="image" src="https://github.com/user-attachments/assets/47e0c3e4-3f4b-4694-a9ed-d0e0b0cd6a6e" />
