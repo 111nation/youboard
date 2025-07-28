@@ -33,4 +33,5 @@ _Various stages done in order to create the UI and UX experience_
 
 _Seems like the X algorithm really liked my designs!_
 <br />
+<br />
 <img width="50%" alt="image" src="https://github.com/user-attachments/assets/47e0c3e4-3f4b-4694-a9ed-d0e0b0cd6a6e" />
