@@ -24,6 +24,7 @@
 	aspect-ratio: 1/1;
 	margin: 0;
 	box-sizing: border-box;
+	border: 2px solid transparent;
 }
 
 .navbar .icon {

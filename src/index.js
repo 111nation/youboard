@@ -1,13 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import ReactDOM from 'react-dom/client';
 
 import "./index.css";
-import PostView from "./pages/PostView/PostView";
+import Home from "./pages/Home/Home";
 
 function App() {
-	return (<>
-		<PostView />
-	</>);
+	return <Home />
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

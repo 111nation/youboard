@@ -21,7 +21,7 @@ function Home () {
 		<div className="page home-page">
 			<TopNav />
 			<Posts />
-			<HomeBar />
+			<HomeBar index={0}/>
 		</div>
 	);
 }
