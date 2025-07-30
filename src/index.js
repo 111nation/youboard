@@ -2,10 +2,10 @@ import React, {useState} from "react";
 import ReactDOM from 'react-dom/client';
 
 import "./index.css";
-import Home from "./pages/Home/Home";
+import LogIn from "./pages/LogIn/LogIn";
 
 function App() {
-	return <Home />
+	return <LogIn create={true}/>;
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

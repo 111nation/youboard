@@ -1,0 +1,12 @@
+.edit {
+	padding: 0.7em 1.5em;
+	background: rgba(41, 43, 44, 0.49);
+	border-radius: 5px;
+	border: 2px solid rgba(105, 105, 105, 0.65);
+	box-sizing: border-box;
+}
+
+.edit:focus, .edit:-webkit-autofill {
+	border: 2px solid rgba(255, 0, 72, 0.8);
+	outline: none;
+}

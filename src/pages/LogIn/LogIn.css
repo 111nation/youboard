@@ -1,0 +1,33 @@
+.hero-wrap  {
+	margin: 2.5em 1em;
+}
+
+.hero-wrap p {
+	margin: 0;
+}
+
+.hero-wrap .slogan, .hero-wrap .slogan .hashtag {
+	font-size: 1em;
+}
+
+.watermark {
+	margin: 0;
+	padding-bottom: 0.5em;
+	font-size: 1.2em;
+	width: 100vw;
+	text-align: center;
+	box-sizing: border-box;
+	position: absolute;
+	bottom: 0;
+}
+
+.login-page {
+	height: 100vh;
+}
+
+.login-page .form {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}

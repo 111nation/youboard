@@ -1,0 +1,29 @@
+.form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100vw;
+	box-sizing: border-box;
+
+	padding: 1em 1em;
+}
+
+.form .edit {
+	width: 100%;
+	margin: 0.4em 0;
+}
+
+.btn-wrap {
+	margin-top: 0.4em;
+	width: 100%;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.btn-wrap .btn {
+	margin-left: 1em;
+}
