@@ -2,16 +2,16 @@ import "./LogIn.css";
 import Edit from "../Edits/Edit";
 import Btn from "../Buttons/Btn";
 
-function SignInForm() {
+function SignInForm(props) {
 	return (
-		<div className="form">
-			<Edit placeholder="Username" /> 
-			<Edit type="password" placeholder="Password" />
+		<form onSubmit={props.onSubmit} className="form">
+			<Edit name="username" placeholder="Username" /> 
+			<Edit name="password" type="password" placeholder="Password" />
 			<div className="btn-wrap">
-				<Btn>New Account</Btn>
-				<Btn className="active">Enter</Btn>
+				<Btn onClick={props.onSwitch}>New Account</Btn>
+				<Btn type="submit" className="active">Enter</Btn>
 			</div>
-		</div>
+		</form>
 	);
 }
 

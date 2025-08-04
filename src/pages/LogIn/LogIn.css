@@ -31,3 +31,16 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
+
+.warning {
+	margin: auto;
+	padding-left: 1em;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.warning p, .warning {
+	color: #FFD016;
+	margin: 0.2em 0;
+}
