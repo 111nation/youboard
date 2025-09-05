@@ -1,3 +1,4 @@
+import {useParams} from "react-router-dom";
 import BackBtn from "../../components/Buttons/BackBtn";
 import FollowBtn from "../../components/Buttons/FollowBtn";
 import Posts from "../../components/Cards/Posts";
@@ -6,10 +7,12 @@ import BigProfile from "../../components/Profiles/BigProfile";
 import "./Profile.css";
 
 function Profile() {
+	const {user} = useParams();
+
 	return (
 		<div className="page profile-page">
 			<div className="profile-info-wrap">
-				<BigProfile />	
+				<BigProfile username={user} />	
 				<FollowBtn />
 			</div>
 

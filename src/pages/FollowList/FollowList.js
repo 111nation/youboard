@@ -1,3 +1,4 @@
+import {useParams} from "react-router-dom";
 import HomeBar from "../../components/NavBars/HomeBar";
 import SmallProfile from "../../components/Profiles/SmallProfile";
 import "./FollowList.css";

@@ -1,8 +1,12 @@
 import "./Profile.css"
 
 function SmallProfile() {
+	const handleClick = () => {
+		window.location.href = "/@sadboy";
+	}
+
 	return (
-		<div className="small-profile-wrap">
+		<div onClick={handleClick} className="small-profile-wrap">
 			<img className="profile"/>
 			<div className="info-wrap">
 				<p className="handle">sadboy</p>
