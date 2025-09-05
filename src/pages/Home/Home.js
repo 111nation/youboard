@@ -3,6 +3,8 @@ import Btn from "../../components/Buttons/Btn";
 import Posts from "../../components/Cards/Posts";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import HomeBar from "../../components/NavBars/HomeBar";
+import {auth} from "../../firebase";
+import {onAuthStateChanged} from "firebase/auth";
 
 function TopNav() {
 	return (
@@ -17,6 +19,11 @@ function TopNav() {
 }
 
 function Home () {
+	// If user not logged in take them to login page
+	onAuthStateChanged(auth, (user) => {
+		if (!user) window.location.href = "/login";
+	});
+
 	return (
 		<div className="page home-page">
 			<TopNav />

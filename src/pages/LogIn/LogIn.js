@@ -1,9 +1,9 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import SignInForm from "../../components/LogInForm/SignInForm";
 import SignUpForm from "../../components/LogInForm/SignUpForm";
 import "./LogIn.css";
-import {checkPassword, checkUsername} from "./rules";
-import {createEvent} from "@testing-library/dom";
+import {checkEmail, checkPassword, checkUsername, signUp} from "./rules";
+
 
 function LogIn(props) {
 	let [warning, setWarning] = useState();
@@ -20,14 +20,7 @@ function LogIn(props) {
 			password: formData.get("password"),
 		};
 
-		let msg = "";
-		if (user.username === "" || user.email === "" || user.password === "") {
-			msg = "Fill in all the fields.\n";
-		}
-
-		msg += checkPassword(user.password);
-		msg += checkUsername(user.username);
-
+		let msg = signUp(user.username, user.email, user.password);
 		setWarning(msg);
 	}
 
