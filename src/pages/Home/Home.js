@@ -11,7 +11,7 @@ function TopNav() {
 		<div className="top-bar">
 			<div className="tab">
 				<Btn className="active">Home</Btn>
-				<Btn>University of Pretoria</Btn>
+				<Btn>Your University</Btn>
 			</div>
 			<SearchBar />
 		</div>
