@@ -2,10 +2,10 @@ import {useState} from "react";
 import SignInForm from "../../components/LogInForm/SignInForm";
 import SignUpForm from "../../components/LogInForm/SignUpForm";
 import "./LogIn.css";
-import {checkEmail, checkPassword, checkUsername, signUp} from "./rules";
+import {signIn, signUp} from "./rules";
 
 
-function LogIn(props) {
+function LogIn() {
 	let [warning, setWarning] = useState();
 
 	const handleSignUp = (e) => {
@@ -24,13 +24,29 @@ function LogIn(props) {
 		setWarning(msg);
 	}
 
+	const handleSignIn = (e) => {
+		e.preventDefault(); // Prevent page reload	
+		setWarning("");
+
+		const form = e.target;
+		const formData = new FormData(form);
+		const credentials = {
+			username: formData.get("username"),
+			password: formData.get("password"),
+		};
+
+
+		let msg = signIn(credentials.username, credentials.password);
+		setWarning(msg);
+	}
+
 	let [createNewAccount, setCreateNewAccount] = useState(false);//<SignUpForm onSubmit={handleSignUp}/>);
 	const getForm = () => {
 		if (createNewAccount) {
 			return <SignUpForm onSwitch={() => setCreateNewAccount(false)} onSubmit={handleSignUp}/>;
 		}
 		
-		return <SignInForm onSwitch={() => setCreateNewAccount(true)} />;
+		return <SignInForm onSwitch={() => setCreateNewAccount(true)} onSubmit={handleSignIn} />;
 	}
 
 	return (

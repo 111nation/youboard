@@ -18,7 +18,7 @@ function Profile() {
 
 			<Posts />
 			<BackBtn />
-			<HomeBar />
+			<HomeBar index={2}/>
 		</div>
 	);
 }

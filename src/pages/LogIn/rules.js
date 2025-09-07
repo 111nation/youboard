@@ -1,5 +1,6 @@
-import { auth } from "../../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../../firebase";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { collection, doc , getDocs, limit, query, setDoc, where } from "firebase/firestore"; 
 
 export function checkPassword(password) {
 	// Recieves password
@@ -31,8 +32,8 @@ export function checkPassword(password) {
 
 
 export function checkUsername(username) {
-	if (username.length < 3 || username.length > 10) {
-		return "Username must be 3-10 characters long.\n";
+	if (username.length < 3 || username.length > 20) {
+		return "Username must be 3-20 characters long.\n";
 	}
 
 	// Check if all characters are valid
@@ -70,6 +71,18 @@ export function checkEmail(email) {
 	return "";
 }
 
+async function uniqueUsername(username) {
+	const q = query(
+		collection(db, "users"),
+		where("username", "==", username),
+		limit(1),
+	);
+	
+	const docs = await getDocs(q);
+
+	// true if unique username
+	return docs.empty;
+}
 
 export function signUp(username, email, password) {
 	username = username.toLowerCase();
@@ -87,19 +100,89 @@ export function signUp(username, email, password) {
 	warning += checkEmail(email);
 	warning += checkPassword(password);
 
+	async function createNewUserEmailAndPassword() {
+		try {
+			let success = await uniqueUsername(username);
+			if (!success) return "Username in use.\n";
+
+			await createUserWithEmailAndPassword(auth, email, password);
+			// Add user details to database
+			const data = {
+				username: username,
+				email: email,
+			};
+
+			let documentPath = "users/" + auth.currentUser.uid;
+			const userDocument = doc(db, documentPath);
+			await setDoc(userDocument, data);
+		} catch (err) {
+			const errorCode = err.code;
+
+			if (errorCode === "auth/email-already-in-use") return "Email already registered.\n";
+			return "Failed to create new user.\n";
+		}
+
+		if (!auth.currentUser) return "Failed to create new user.\n";
+
+		window.location.href = "/";
+		return "";
+	}
+
 	if (warning === "") {
-		console.log("Hello!");
-		createUserWithEmailAndPassword(auth, email, password)
-		.then((userCredential) => {
-			// Signed up 
-			const user = userCredential.user;
-			window.location.href = "/login";
-		})
-		.catch((error) => {
-			const errorMessage = error.message;
-			warning = errorMessage;
-		});
+		warning = createNewUserEmailAndPassword();
 	}
 
 	return warning;
+}
+
+async function getEmailFromUsername(username) {
+		const q = query(
+			collection(db, "users"),
+			where("username", "==", username),
+			limit(1),
+		);
+		
+		const querySnapshot = await getDocs(q);
+		const doc = querySnapshot.docs[0];
+	
+		if (doc === undefined) {
+			return "";
+		} else {
+			return doc.data().email;
+		}
+}
+
+export function signIn(username, password) {
+	// Sign in already created user
+	// Username can also be email
+	
+	// Determine if email or username given
+	const emailCheck = (email) => {
+		let regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	
+		return regex.test(email);
+	};
+
+	let isEmail = emailCheck(username);
+	let email = username;
+
+	async function attemptToSignIn() {
+		try {
+			// Get user's email if username entered
+			if (!isEmail) {
+				email = await getEmailFromUsername(username);
+				if (email === "") return "Username not registered.\n";
+			}
+
+			await signInWithEmailAndPassword(auth, email, password);
+			window.location.href = "/";
+			return "";
+		} catch (e) {
+			const errorCode = e.code;
+			if (errorCode == "auth/invalid-credential") return "Account details are incorrect.\n";
+			return "Failed to sign in.\n";
+		}
+	}
+
+	return attemptToSignIn();
 }

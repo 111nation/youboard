@@ -4,19 +4,13 @@ import ReactDOM from 'react-dom/client';
 import "./index.css";
 import LogIn from "./pages/LogIn/LogIn";
 import Home from "./pages/Home/Home";
-import {BrowserRouter, Routes, Route, Link} from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Search from "./pages/Search/Search";
 import FollowList from "./pages/FollowList/FollowList";
 import Profile from "./pages/Profile/Profile";
 import Post from "./pages/PostView/PostView";
 
 function App() {
-	/*
-	if (!userLoggedIn()) {
-		window.location.href = "/login";
-	}
-	*/
-
 	return (
 		<BrowserRouter>
 			{/* ROUTES */}
