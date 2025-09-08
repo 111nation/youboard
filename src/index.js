@@ -9,6 +9,7 @@ import Search from "./pages/Search/Search";
 import FollowList from "./pages/FollowList/FollowList";
 import Profile from "./pages/Profile/Profile";
 import Post from "./pages/PostView/PostView";
+import RedirectErrorPage from "./404";
 
 function App() {
 	return (
@@ -16,6 +17,8 @@ function App() {
 			{/* ROUTES */}
 			<Routes>
 				<Route path="/" element={<Home />} />
+				<Route path="/404/:error" element={<RedirectErrorPage />} />
+				<Route path="/404" element={<RedirectErrorPage />} />
 				<Route path="/:user" element={<Profile />} />
 				<Route path="/login" element={<LogIn create={false}/>} />
 				<Route path="/search/:query" element={<Search />} />

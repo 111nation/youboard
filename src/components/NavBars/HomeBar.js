@@ -1,12 +1,30 @@
+import {useState} from "react";
+import {auth} from "../../firebase";
+import {getUsername} from "../../user";
 import NavBar from "./NavBar";
 import "./NavBar.css";
 import {Link} from "react-router-dom";
+
+function openProfile() {
+	// Attempt to open user profile
+	// Opens if user loaded otherwise do nothing
+	let user = auth.currentUser;
+
+	if (user) {
+		getUsername(user.uid)
+		.then((username) => {
+			window.location.href = "/@" + username;
+		},
+		() => {
+			window.location.href = "/404/Failed to load profile";
+		});
+	}
+}
 
 function HomeBar(props) {
 	let icon_color = Array(3).fill("#F9F9F9");
 	let selected = props.index === undefined || props.index >= 3 || props.index < 0 ? 0 : props.index;
 	icon_color[selected] = "#FF0048";
-	
 
 	return (
 	<NavBar className="homebar">
@@ -24,9 +42,7 @@ function HomeBar(props) {
 			</svg>
 		</Link>
 
-		<Link to="/@sadboy">
-			<img style={{borderColor: icon_color[2]}} className="profile"/>
-		</Link>
+		<img onClick={openProfile} style={{borderColor: icon_color[2]}} className="profile"/>
 	</NavBar>
 	);
 }
