@@ -19,7 +19,7 @@ function App() {
 				<Route path="/" element={<Home />} />
 				<Route path="/404/:error" element={<RedirectErrorPage />} />
 				<Route path="/404" element={<RedirectErrorPage />} />
-				<Route path="/:user" element={<Profile />} />
+				<Route path="/@:user" element={<Profile />} />
 				<Route path="/login" element={<LogIn create={false}/>} />
 				<Route path="/search/:query" element={<Search />} />
 				<Route path="/:user/followers" element={<FollowList heading="Followers"/>} />

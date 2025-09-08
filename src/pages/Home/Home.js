@@ -3,9 +3,8 @@ import Btn from "../../components/Buttons/Btn";
 import Posts from "../../components/Cards/Posts";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import HomeBar from "../../components/NavBars/HomeBar";
-import {auth} from "../../firebase";
-import {onAuthStateChanged} from "firebase/auth";
 import {useState} from "react";
+import {currentUser} from "../../user";
 
 function TopNav(props) {
 	let universityPage = props.universityPage === undefined ? false : props.universityPage;
@@ -21,11 +20,6 @@ function TopNav(props) {
 }
 
 function Home () {
-	// If user not logged in take them to login page
-	onAuthStateChanged(auth, (user) => {
-		if (!user) window.location.href = "/login";
-	});
-
 	let [universityPage, setUniversityPage] = useState(false);
 
 	const switchUniversityPage = () => {

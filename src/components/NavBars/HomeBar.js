@@ -1,6 +1,4 @@
-import {useState} from "react";
-import {auth} from "../../firebase";
-import {getUsername} from "../../user";
+import {currentUser} from "../../user";
 import NavBar from "./NavBar";
 import "./NavBar.css";
 import {Link} from "react-router-dom";
@@ -8,16 +6,10 @@ import {Link} from "react-router-dom";
 function openProfile() {
 	// Attempt to open user profile
 	// Opens if user loaded otherwise do nothing
-	let user = auth.currentUser;
-
-	if (user) {
-		getUsername(user.uid)
-		.then((username) => {
-			window.location.href = "/@" + username;
-		},
-		() => {
-			window.location.href = "/404/Failed to load profile";
-		});
+	if (currentUser) {
+		window.location.href = "/@" + currentUser.username;
+	} else {
+		window.location.href = "/404/Failed to load profile";
 	}
 }
 

@@ -12,6 +12,6 @@
 	background: #121212;
 }
 
-.profile-info-wrap .btn {
+.profile-info-wrap .btn, .profile-info-wrap .follow-btn {
 	margin-top: 1.4em;
 }

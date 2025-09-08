@@ -74,6 +74,11 @@
 	align-items: center;
 }
 
+.user-info-wrap:focus, .user-info-wrap:active {
+	transition: 0.15s ease-out;
+	background: rgba(41, 43, 44, 0.7);
+}
+
 .user-info-wrap .profile {
 	width: 15vw;
 	margin-right: 0.7em;

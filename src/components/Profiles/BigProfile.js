@@ -7,7 +7,7 @@ function BigProfile(props) {
 			<img className="profile"/>
 			<p className="handle">{props.username}</p>
 			<p className="follower-count">
-				<Link to="followers">92 Followers</Link> | <Link to={"following"}>5 Following</Link>
+				<Link to="followers">0 Followers</Link> | <Link to={"following"}>0 Following</Link>
 			</p>
 		</div>
 	);
