@@ -2,8 +2,9 @@ import {useState} from "react";
 import SignInForm from "../../components/LogInForm/SignInForm";
 import SignUpForm from "../../components/LogInForm/SignUpForm";
 import "./LogIn.css";
-import {isEmail, logInErrorMessage, validateSignUp} from "../../rules";
-
+import {logInErrorMessage, signIn, signUp} from "../../login";
+import {AuthErrorCodes} from "firebase/auth";
+import {currentUser, USER_ERRORS} from "../../user";
 
 function LogIn() {
 	let [warning, setWarning] = useState();
@@ -17,16 +18,28 @@ function LogIn() {
 		let email = formData.get("email");
 		let password = formData.get("password"); 
 
-		validateSignUp(username, email, password).then(
-			(valid) => {
-				// Display log in error
-				if (!valid) {
-					setWarning(logInErrorMessage);
-				} 
+		signUp(username, email, password)
+			.then(
+				(result) => {
+					if (!result) {
+						setWarning(logInErrorMessage);
+						return;
+					}
 
-				// Create new user
-			},
-		);
+					window.location.href = "/";
+				},
+			)
+			.catch(
+				(e) => {
+					switch (e.code) {
+						case AuthErrorCodes.EMAIL_EXISTS:
+							return setWarning("Email already registered.\n");
+						default:
+							return setWarning("Failed to create new user.\n");
+					}
+				}
+			);
+
 	}
 
 	const onSignIn = (e) => {
@@ -37,16 +50,31 @@ function LogIn() {
 		let username =  formData.get("username");
 		let password = formData.get("password");
 
-		if (username === "" || password === "") {
-			setWarning("Fill in all the fields.\n");
-			return;
-		}
+		signIn(username, password)
+			.then(
+				(result) => {
+					if (!result) {
+						setWarning(logInErrorMessage);
+						return;
+					}
 
-		if (isEmail(username)) {
-			// Email sign in
-		} else {
-			// Username sign in
-		}
+					console.log(currentUser);
+					window.location.href = "/";
+				},
+			)
+			.catch(
+				(e) => {
+					switch (e.code) {
+						case AuthErrorCodes.INVALID_LOGIN_CREDENTIALS:
+							return setWarning("Incorrect log in details.\n");
+						case USER_ERRORS.USER_DATA_NOT_FOUND:
+							return setWarning("Username not registered.\n");
+						default:
+							return setWarning("Failed to sign in.\n");
+					}
+				}
+			);
+
 	}
 
 	let [createNewAccount, setCreateNewAccount] = useState(false);

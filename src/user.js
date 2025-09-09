@@ -1,6 +1,6 @@
-import { AuthErrorCodes, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import {auth, db} from "./firebase";
-import {doc, getDoc, setDoc} from "firebase/firestore";
+import {doc, getDoc, getDocs, setDoc, query, limit, where, collection} from "firebase/firestore";
 
 /* TODO: 
  * Error handling for when NULL document returned
@@ -13,10 +13,18 @@ async function getDocFromUsername(username) {
 		limit(1),
 	);
 	
-	const docs = await getDocs(q); // Doc can be empty
+	const querySnapshot = await getDocs(q); // Doc can be empty
+	
+	if (querySnapshot.empty) {
+		return null;
+	}
 
-	return docs[0];
+	return querySnapshot.docs[0];
 }
+
+export const USER_ERRORS = {
+	USER_DATA_NOT_FOUND: "User data not found",
+};
 
 export class User {
 	constructor(uid, username, email, userDoc) {
@@ -43,15 +51,16 @@ export class User {
 	static async signInWithEmail(email, password) {
 		let userCred = await signInWithEmailAndPassword(auth, email, password);
 		const user = userCred.user;
-		const docRef = doc(db, "users", user.uid);
-		const userDoc = await getDoc(docRef); // Possible error that doc is empty
-		const username = docRef.data().username;
+		const userDoc = await getDoc(doc(db, "users", user.uid)); 
+		const username = userDoc.data().username;
 
 		return new User(user.uid, username, email, userDoc);
 	}
 
 	static async signInWithUsername(username, password) {
 		const userDoc = await getDocFromUsername(username);
+		if (!userDoc) throw { code: USER_ERRORS.USER_DATA_NOT_FOUND };
+
 		const email = userDoc.data().email;
 	
 		let userCred = await signInWithEmailAndPassword(auth, email, password);
@@ -65,8 +74,9 @@ export class User {
 	 */
 
 	static async getFromUid(uid) {
-		const docRef = doc(db, "users", uid);
-		const userDoc = await getDoc(docRef); // Possible error that doc is empty
+		const userDoc = await getDoc(doc(db, "users", uid));
+		if (!userDoc) throw { code: USER_ERRORS.USER_DATA_NOT_FOUND };
+
 		const username = userDoc.data().username;
 		const email = userDoc.data().email;
 
@@ -74,7 +84,9 @@ export class User {
 	}
 
 	static async getFromUsername(username) {
-		const userDoc = await getDocFromUsername(username); // Possible error that doc is empty
+		const userDoc = await getDocFromUsername(username);
+		if (!userDoc) throw { code: USER_ERRORS.USER_DATA_NOT_FOUND };
+
 		const email = userDoc.data().email;
 		const uid = userDoc.id;
 
@@ -82,3 +94,8 @@ export class User {
 	}
 };
 
+export let currentUser = undefined;
+
+export function setCurrentUser(x) {
+	currentUser = x;
+}
