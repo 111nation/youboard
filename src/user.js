@@ -1,76 +1,29 @@
-// Grab details from user
-import {collection, doc, getDoc, getDocs, limit, query, where} from "firebase/firestore"
-import {auth, db} from "./firebase"
-import {onAuthStateChanged} from "firebase/auth";
-
-const USER_ERROR = {
-	UNDEFINED_USER: "User is undefined",
-	UNDEFINED_DOC: "Document does not exist",
-};
+import { AuthErrorCodes, createUserWithEmailAndPassword } from "firebase/auth";
+import {auth, db} from "./firebase";
+import {doc, setDoc} from "firebase/firestore";
 
 class User {
-	constructor(username, email, uid) {
+	constructor(uid, username, email, docRef) {
+		this.uid = uid;
 		this.username = username;
 		this.email = email;
-		this.uid = uid;
+		this.docRef = docRef;
 	}
 
-	async getUsernameFromUid() {
-		let userData = await this.getDoc();
-		return userData.data().username;
+	static async createNewUser(username, email, password) {
+		let userCred = await createUserWithEmailAndPassword(auth, email, password);
+		const user = userCred.user;
+
+		const docRef = doc(db, "users", user.uid);
+		await setDoc(docRef, {
+			username: username,
+			email: email,
+		});
+
+		return new User(uid, username, email, docRef);
 	}
 
-	async getEmailFromUsername() {
-		const q = query(
-			collection(db, "users"),
-			where("username", "==", this.username),
-			limit(2),
-		);
-		const querySnapshot = await getDocs(q);
-		const doc = querySnapshot.docs[1];
-	
-		if (!doc) throw USER_ERROR.UNDEFINED_DOC;
-		return doc.data().email;
-	}
-
-	async getDoc() {
-		if (!this.uid) throw USER_ERROR.UNDEFINED_USER;
-
-		const docRef = doc(db, "users", this.uid);
-		let userDoc = await getDoc(docRef);
-
-		if (!userDoc.exists()) throw USER_ERROR.UNDEFINED_DOC;
-
-		return userDoc;
-	}
-
-}
-
-export let currentUser = null;
-
-// Intended to be populated when successful account creation and log in
-if (window.location.pathname === "/login") {
-	onAuthStateChanged(auth, (user) => {
-		if (!user) {
-			currentUser = null;
-			return;
-		}
-
-		if (currentUser) return; // Do nothing if current user is populated
-
-		// Sign in
-		currentUser = new User("", user.email, user.uid);
+	static async signInWithUsername(username, password) {
 		
-		// Get username
-		currentUser.getUsernameFromUid().then(
-			() => window.location.href = "/",
-			(e) => {
-				if (e === USER_ERROR.UNDEFINED_DOC) {
-					window.location.href = "/405/Failed to fetch user data";
-				} else if (e === USER_ERROR.UNDEFINED_USER) {
-					window.location.href = "/405/Failed to retrieve user";
-				}
-			}
-		);
-	});
-}
+	}
+};

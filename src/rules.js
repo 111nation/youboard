@@ -1,11 +1,11 @@
-import { auth, db } from "../../firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { collection, doc , getDocs, limit, query, setDoc, where } from "firebase/firestore"; 
+import { db } from "./firebase";
+import { collection, query, where, getDocs, limit } from "firebase/firestore";
 
-export function checkPassword(password) {
-	// Recieves password
-	// Checks if password abides to password rules
-	// Return JSX to indicate error message to be displayed.
+export let logInErrorMessage = "";
+
+export function validatePassword(password) {
+	let valid = true;
+
 	let numberPresent = false;
 	let numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 	for (let x of password) {
@@ -16,59 +16,21 @@ export function checkPassword(password) {
 	}
 
 	if (password.trim() !== password) {
-		return "Remove spaces or tabs in your password.\n";
+		valid = false;
+		logInErrorMessage += "Remove spaces or tabs in your password.\n";
 	}
 
 	if (password.length < 8 || password.length > 16) {
-		return "Password must be 8-16 characters long.\n"
+		valid = false;
+		logInErrorMessage += "Password must be 8-16 characters long.\n"
 	}
 
 	if (!numberPresent) {
-		return "Password must contain a number.\n";
+		valid = false;
+		logInErrorMessage += "Password must contain a number.\n";
 	}
 
-	return "";
-}
-
-
-export function checkUsername(username) {
-	if (username.length < 3 || username.length > 20) {
-		return "Username must be 3-20 characters long.\n";
-	}
-
-	// Check if all characters are valid
-	// Only invalid if one character doesn't pass check
-	let validChars = true;
-	const specialChars = ['_', '.'];
-	for (let x of username) {
-		if (x >= 'a' && x <= 'z') continue;
-		if (x >= '0' && x <= '9') continue;
-		if (specialChars.includes(x)) continue
-
-		validChars = false;
-	}
-
-	if (validChars === false) {
-		return "Invalid username.\n";
-	}
-
-	return "";
-}
-
-export function checkEmail(email) {
-	const validateEmail = (email) => {
-	  return String(email)
-		.toLowerCase()
-		.match(
-		  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-		);
-	};
-
-	if (!validateEmail(email)) {
-		return "Invalid email address.\n";
-	}
-
-	return "";
+	return valid;
 }
 
 async function uniqueUsername(username) {
@@ -84,7 +46,69 @@ async function uniqueUsername(username) {
 	return docs.empty;
 }
 
-export function signUp(username, email, password) {
+export function validateUsername(username) {
+	let valid = true; 
+
+	if (username.length < 3 || username.length > 20) {
+		valid = false;
+		logInErrorMessage += "Username must be 3-20 characters long.\n";
+	}
+
+	// Check if all characters are valid
+	// Only invalid if one character doesn't pass check
+	let validChars = true;
+	const specialChars = ['_', '.'];
+	for (let x of username) {
+		if (x >= 'a' && x <= 'z') continue;
+		if (x >= '0' && x <= '9') continue;
+		if (specialChars.includes(x)) continue
+
+		validChars = false;
+	}
+
+	if (!validChars) {
+		valid = false;
+		logInErrorMessage += "Invalid username.\n";
+	}
+
+	return valid;
+}
+
+export function isEmail(email) {
+	let regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+	return regex.test(email);
+}
+
+export function validateEmail(email) {
+	if (!isEmail(email)) {
+		logInErrorMessage += "Invalid email address.\n";
+		return false;
+	}
+
+	return true;
+}
+
+
+export async function validateSignUp(username, email, password) {
+	logInErrorMessage = "";
+
+	if (username === "" || email === "" || password === "") {
+		logInErrorMessage += "Fill in all the fields.\n";
+		return false;
+	}
+
+	if (!validateUsername(username) || !validateEmail(email) || !validatePassword(password)) {
+		return false;
+	}
+
+	if (!(await uniqueUsername(username))) {
+		return false;
+	}
+
+	return true;
+}
+
+/*export function signUp(username, email, password) {
 	username = username.toLowerCase();
 	email = email.toLowerCase();
 	// Successful - No warning generated
@@ -185,4 +209,4 @@ export function signIn(username, password) {
 	}
 
 	return attemptToSignIn();
-}
+}*/

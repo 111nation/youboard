@@ -2,51 +2,60 @@ import {useState} from "react";
 import SignInForm from "../../components/LogInForm/SignInForm";
 import SignUpForm from "../../components/LogInForm/SignUpForm";
 import "./LogIn.css";
-import {signIn, signUp} from "./rules";
+import {isEmail, logInErrorMessage, validateSignUp} from "../../rules";
 
 
 function LogIn() {
 	let [warning, setWarning] = useState();
 
-	const handleSignUp = (e) => {
+	const onSignUp = (e) => {
 		e.preventDefault(); // prevent reloading of page
 		setWarning("");
 		
-		const form = e.target;
-		const formData = new FormData(form);
-		const user = {
-			username: formData.get("username"),
-			email: formData.get("email"),
-			password: formData.get("password"),
-		};
+		const formData = new FormData(e.target);
+		let username = formData.get("username");
+		let email = formData.get("email");
+		let password = formData.get("password"); 
 
-		let msg = signUp(user.username, user.email, user.password);
-		setWarning(msg);
+		validateSignUp(username, email, password).then(
+			(valid) => {
+				// Display log in error
+				if (!valid) {
+					setWarning(logInErrorMessage);
+				} 
+
+				// Create new user
+			},
+		);
 	}
 
-	const handleSignIn = (e) => {
+	const onSignIn = (e) => {
 		e.preventDefault(); // Prevent page reload	
 		setWarning("");
 
-		const form = e.target;
-		const formData = new FormData(form);
-		const credentials = {
-			username: formData.get("username"),
-			password: formData.get("password"),
-		};
+		const formData = new FormData(e.target);
+		let username =  formData.get("username");
+		let password = formData.get("password");
 
+		if (username === "" || password === "") {
+			setWarning("Fill in all the fields.\n");
+			return;
+		}
 
-		let msg = signIn(credentials.username, credentials.password);
-		setWarning(msg);
+		if (isEmail(username)) {
+			// Email sign in
+		} else {
+			// Username sign in
+		}
 	}
 
-	let [createNewAccount, setCreateNewAccount] = useState(false);//<SignUpForm onSubmit={handleSignUp}/>);
+	let [createNewAccount, setCreateNewAccount] = useState(false);
 	const getForm = () => {
 		if (createNewAccount) {
-			return <SignUpForm onSwitch={() => setCreateNewAccount(false)} onSubmit={handleSignUp}/>;
+			return <SignUpForm onSwitch={() => setCreateNewAccount(false)} onSubmit={onSignUp}/>;
 		}
 		
-		return <SignInForm onSwitch={() => setCreateNewAccount(true)} onSubmit={handleSignIn} />;
+		return <SignInForm onSwitch={() => setCreateNewAccount(true)} onSubmit={onSignIn} />;
 	}
 
 	return (
