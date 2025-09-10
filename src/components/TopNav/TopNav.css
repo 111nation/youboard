@@ -1,0 +1,30 @@
+.topnav {
+	box-sizing: border-box;
+	width: 100vw;
+	position: sticky;
+	background-color: rgba(18, 18, 18, 1);
+	border-bottom: 1px solid rgba(105, 105, 105, 1);
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+
+	padding: 0.5em 0em;
+
+	z-index: 1000;
+}
+
+.topnav .subheading {
+	font-size: 1.3rem;
+	margin: 0;
+}
+
+.topnav .icon {
+	stroke: rgba(249, 249, 249, 1);
+	aspect-ratio: 1/1;
+	height: 2.2em;
+
+	position: absolute;
+	left: 1.4em;
+}

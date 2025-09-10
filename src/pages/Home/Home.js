@@ -4,7 +4,6 @@ import Posts from "../../components/Cards/Posts";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import HomeBar from "../../components/NavBars/HomeBar";
 import {useState} from "react";
-import {currentUser} from "../../user";
 
 function TopNav(props) {
 	let universityPage = props.universityPage === undefined ? false : props.universityPage;

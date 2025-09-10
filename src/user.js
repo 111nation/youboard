@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import {auth, db} from "./firebase";
 import {doc, getDoc, getDocs, setDoc, query, limit, where, collection} from "firebase/firestore";
 
@@ -94,8 +94,24 @@ export class User {
 	}
 };
 
-export let currentUser = undefined;
+export let currentUser = getCurrentUserFromLocalStorage();
+
+// Retrieve current logged in user from local storage
+// Ensure the user there matches user from firebase
+function getCurrentUserFromLocalStorage() {
+	let localStorageUser = JSON.parse(localStorage.getItem("currentUser"));
+	const user = auth.currentUser;
+
+	if (user && user.uid === localStorageUser.uid) {
+		return null;
+	}
+
+	return localStorageUser;
+}
 
 export function setCurrentUser(x) {
 	currentUser = x;
+	
+	// Save user to localStorage
+	localStorage.setItem("currentUser", JSON.stringify(currentUser));
 }

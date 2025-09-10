@@ -6,12 +6,26 @@ import Posts from "../../components/Cards/Posts";
 import HomeBar from "../../components/NavBars/HomeBar";
 import BigProfile from "../../components/Profiles/BigProfile";
 import "./Profile.css";
+import {currentUser, User, USER_ERRORS} from "../../user";
 import {useState} from "react";
-import {currentUser} from "../../user";
 
 function Profile() {
 	const {user} = useParams();
-	let [controls, setControl] = useState(<></>);	
+	let [userExists, setUserExists] = useState(false);
+
+	// Ensure that we viewing an existing user
+	User.getFromUsername(user.substring(1))
+	.then(() => setUserExists(true))
+	.catch ((e) => {
+		switch (e.code) {
+			case USER_ERRORS.USER_DATA_NOT_FOUND:
+				return window.location.href = "/404/User does not exist :(";
+			default:
+				return window.location.href = "/404/Failed to fetch user :(";
+		}
+	});
+
+	if (!userExists) return <></>;
 
 	// Own profile - Settings button
 	// Other profile - Follow button
@@ -24,14 +38,11 @@ function Profile() {
 		}
 	}
 
-	// Determine if user is seeing their own page or another user's
-	setControl(getControl());
-
 	return (
 		<div className="page profile-page">
 			<div className="profile-info-wrap">
 				<BigProfile username={user} />	
-				{controls}
+				{getControl()}
 			</div>
 
 			<Posts />

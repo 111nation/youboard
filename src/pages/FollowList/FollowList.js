@@ -1,27 +1,29 @@
-import {useParams} from "react-router-dom";
 import HomeBar from "../../components/NavBars/HomeBar";
 import SmallProfile from "../../components/Profiles/SmallProfile";
+import TopNav from "../../components/TopNav/TopNav";
 import "./FollowList.css";
 
 function FollowList(props) {
 	return (
-		<div className="page followlist-page">
-			<div className="followlist-wrap">
-				<p className="heading">{props.heading}</p>
-				<SmallProfile />
-				<SmallProfile />
-				<SmallProfile />
-				<SmallProfile />
-				<SmallProfile />
-				<SmallProfile />
-				<SmallProfile />
-				<SmallProfile />
-				<SmallProfile />
-				<SmallProfile />
-				<SmallProfile />
+		<>
+			<TopNav title={props.title}/>
+			<div className="page followlist-page">
+				<div className="followlist-wrap">
+					<SmallProfile />
+					<SmallProfile />
+					<SmallProfile />
+					<SmallProfile />
+					<SmallProfile />
+					<SmallProfile />
+					<SmallProfile />
+					<SmallProfile />
+					<SmallProfile />
+					<SmallProfile />
+					<SmallProfile />
+				</div>
+				<HomeBar />
 			</div>
-			<HomeBar />
-		</div>
+		</>
 	);
 }
 

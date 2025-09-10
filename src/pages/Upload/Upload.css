@@ -1,0 +1,33 @@
+.upload-wrap {
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	align-items: center;
+}
+
+.upload-photo {
+	box-sizing: border-box;
+	background-color: rgba(105, 105, 105, 1);
+	width: 100vw;
+	height: 30vh;
+}
+
+.select-photo-option {
+	color: rgba(255, 0, 72, 1);
+	font-weight: 400;
+	text-align: center;
+}
+
+.upload-wrap .edit {
+	padding: 0.7em 1em;
+	width: 90vw;
+}
+
+.upload-wrap .btn {
+	margin: 1.5em 0;
+	width: 80vw;
+}
+
+.upload-desc {
+	height: 20vh;
+}

@@ -1,0 +1,53 @@
+.popup-overlay {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	background-color: rgba(18, 18, 18, 0.74);
+	box-sizing: border-box;
+}
+
+.popup {
+	width: 75vw;
+
+	background-color: rgba(31, 31, 32, 1);
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	box-sizing: border-box;
+	border-radius: 25px;
+
+	overflow: hidden;
+
+	padding: 0.8em 1.2em;
+}
+
+.popup-separator {
+	background-color: rgba(41, 43, 44, 1);
+	box-sizing: border-box;
+	width: 100vw;
+	height: 2px;
+
+	margin: 0.4em 0 1.2em 0;
+}
+
+.popup .subheading {
+	font-size: 1.3rem;
+}
+
+.popup .hint {
+	font-size: 1.1rem;
+	text-align: center;
+
+	margin-bottom: 1.25em;
+}
+
+.popup .btn {
+	width: 100%;
+	font-size: 1.1rem;
+	margin-bottom: 0.75em;
+}

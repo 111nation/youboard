@@ -3,9 +3,10 @@ import NavBar from "./NavBar";
 import "./NavBar.css";
 import {Link} from "react-router-dom";
 
-function openProfile() {
+const openProfile = () => {
 	// Attempt to open user profile
 	// Opens if user loaded otherwise do nothing
+	console.log("Hello");
 	if (currentUser) {
 		window.location.href = "/@" + currentUser.username;
 	} else {

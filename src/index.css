@@ -30,6 +30,12 @@ body {
 	font-size: 0.85rem;
 }
 
+.hint {
+	color: #696969;
+	font-weight: 400;
+	font-size: 1rem;
+}
+
 .page {
 	/*height: 100vh;*/
 	height: 90vh;
@@ -46,3 +52,21 @@ body {
 	background: #121212;
 }
 
+.option {
+	font-size: 1.1rem;
+	border-top: 1px solid rgba(41, 43, 44, 1);
+	border-bottom: 1px solid rgba(41, 43, 44, 1);
+	margin: 0;
+
+	padding: 1em 1em;
+
+	transition: 0.15s ease-out;
+}
+
+.option:active, .option:focus {
+	background-color: rgba(41, 43, 44, 1);
+}
+
+.option.critical {
+	color: rgba(248, 27, 31, 1);
+}
