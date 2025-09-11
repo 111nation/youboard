@@ -9,6 +9,11 @@ import "./Profile.css";
 import {currentUser, User, USER_ERRORS} from "../../user";
 import {useState} from "react";
 
+const onSettingsClick = () => {
+	window.location.href = "/settings";
+}
+
+
 function Profile() {
 	const {user} = useParams();
 	let [userExists, setUserExists] = useState(false);
@@ -32,16 +37,16 @@ function Profile() {
 	const getControl = () => {
 		let username = currentUser ? currentUser.username : "";
 		if (username === user.substring(1)) { // Ignore '@' symbol
-			return <Btn className="">Settings</Btn>;
+			return <Btn className="" onClick={onSettingsClick}>Settings</Btn>;
 		} else {
-			return <FollowBtn />
+			return <FollowBtn target={user.substring(1)}/>
 		}
 	}
 
 	return (
 		<div className="page profile-page">
 			<div className="profile-info-wrap">
-				<BigProfile username={user} />	
+				<BigProfile username={user.substring(1)} />	
 				{getControl()}
 			</div>
 

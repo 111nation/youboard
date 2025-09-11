@@ -1,3 +1,4 @@
+import Loader from "./Loader/Loader";
 import "./PopUp.css";
 
 function PopUp(props) {
@@ -15,6 +16,8 @@ function PopUp(props) {
 				</div>
 
 				{props.children}
+		 	
+				{props.loader === true && <Loader />}
 
 			</div>
 		</div>

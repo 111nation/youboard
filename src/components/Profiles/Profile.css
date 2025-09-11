@@ -4,7 +4,6 @@
 }
 
 .follower-count {
-	font-weight: 300;
 	margin: 0;
 }
 
@@ -35,7 +34,7 @@
 }
 
 .big-profile-wrap .follower-count {
-	font-size: 0.85rem;
+	margin-top: 0.5em;
 }
 
 .small-profile-wrap {
