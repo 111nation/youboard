@@ -1,15 +1,15 @@
 import "./Profile.css"
 
-function SmallProfile() {
+function SmallProfile(props) {
 	const handleClick = () => {
-		window.location.href = "/@sadboy";
+		window.location.href = "/@" + props.username;
 	}
 
 	return (
 		<div onClick={handleClick} className="small-profile-wrap">
 			<img className="profile"/>
 			<div className="info-wrap">
-				<p className="handle">sadboy</p>
+				<p className="handle">{props.username}</p>
 				<p className="follower-count">92 Followers</p>
 			</div>
 		</div>

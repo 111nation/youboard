@@ -70,8 +70,11 @@ export async function followers(target_uid) {
 
 	const querySnapshot = await getDocs(q);
 
+	const usersList = await Promise.all(
+		querySnapshot.docs.map(doc => User.getFromUid(doc.data().follower_uid))
+	);
 
-	return querySnapshot.docs;
+	return usersList;
 }
 
 export async function following(target_uid) {
@@ -83,6 +86,10 @@ export async function following(target_uid) {
 	);
 
 	const querySnapshot = await getDocs(q);
-	
-	return querySnapshot.docs;
+
+	const usersList = await Promise.all(
+		querySnapshot.docs.map(doc => User.getFromUid(doc.data().target_uid))
+	);
+
+	return usersList;
 }

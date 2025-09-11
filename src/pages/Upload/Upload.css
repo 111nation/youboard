@@ -16,6 +16,7 @@
 	color: rgba(255, 0, 72, 1);
 	font-weight: 400;
 	text-align: center;
+	width: 100%;
 }
 
 .upload-wrap .edit {

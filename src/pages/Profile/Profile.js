@@ -7,7 +7,7 @@ import HomeBar from "../../components/NavBars/HomeBar";
 import BigProfile from "../../components/Profiles/BigProfile";
 import "./Profile.css";
 import {currentUser, User, USER_ERRORS} from "../../user";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const onSettingsClick = () => {
 	window.location.href = "/settings";
@@ -19,16 +19,18 @@ function Profile() {
 	let [userExists, setUserExists] = useState(false);
 
 	// Ensure that we viewing an existing user
-	User.getFromUsername(user.substring(1))
-	.then(() => setUserExists(true))
-	.catch ((e) => {
-		switch (e.code) {
-			case USER_ERRORS.USER_DATA_NOT_FOUND:
-				return window.location.href = "/404/User does not exist :(";
-			default:
-				return window.location.href = "/404/Failed to fetch user :(";
-		}
-	});
+	useEffect(() => {
+		User.getFromUsername(user.substring(1))
+		.then(() => setUserExists(true))
+		.catch ((e) => {
+			switch (e.code) {
+				case USER_ERRORS.USER_DATA_NOT_FOUND:
+					return window.location.href = "/404/User does not exist :(";
+				default:
+					return window.location.href = "/404/Failed to fetch user :(";
+			}
+		})
+	}, []);
 
 	if (!userExists) return <></>;
 

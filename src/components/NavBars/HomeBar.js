@@ -16,7 +16,7 @@ const openProfile = () => {
 
 function HomeBar(props) {
 	let icon_color = Array(3).fill("#F9F9F9");
-	let selected = props.index === undefined || props.index >= 3 || props.index < 0 ? 0 : props.index;
+	let selected = props.index === undefined || props.index >= 3 || props.index < 0 ? -1 : props.index;
 	icon_color[selected] = "#FF0048";
 
 	return (
