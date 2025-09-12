@@ -1,36 +1,45 @@
 import {useEffect, useState} from "react";
-import {followers, following} from "../../follow";
 import "./Profile.css"
-import {User} from "../../user";
 import {Link} from "react-router-dom";
+import {followersAndFollowingCount} from "../../follow";
 
 function BigProfile(props) {
-	let [num_followers, setFollowers] = useState(0);
-	let [num_following, setFollowing] = useState(0);
+	let user = props.user;
+	let [followers, setFollowers] = useState(0);
+	let [following, setFollowing] = useState(0);
+	
+	const loadFollowers = async () => {
+		let [followers, following] = await followersAndFollowingCount(user.uid);
+
+		setFollowers(followers);
+		setFollowing(following);
+	}
 
 	useEffect(() => {
-		User.getFromUsername(props.username)
-		.then(async (user) => {
-			// Fetch follower counts
-			try {
-				setFollowers((await followers(user.uid)).length);
-				setFollowing((await following(user.uid)).length);
+		// Don't display pop up, assume parent component handles errors
+		if (!user) return;
+		loadFollowers();
+	}, [user]);
 
-			} catch (e) {
-				console.log("Failed to fetch followers");
-				console.log(e.message);
-			}
-		}) 
-		.catch((e) => console.log(e.code));
-	}, []);
+	if (!user) {
+		return (
+			<div className="big-profile-wrap">
+				<img className="profile"/>
+				<p className="handle">@</p>
+				<p className="follower-count">
+					0 Followers &#9;|&nbsp;&#9; 0 Following
+				</p>
+			</div>
+		);
+	}
 
 	return (
 		<div className="big-profile-wrap">
 			<img className="profile"/>
-			<p className="handle">{"@" + props.username}</p>
+			<p className="handle">{"@" + user.username}</p>
 			<p className="follower-count">
-				<Link to="followers">{String(num_followers)} Followers</Link> &#9;|&nbsp;&#9;  
-				<Link to="following">{String(num_following)} Following</Link>
+				<Link to="followers">{followers} Followers</Link> &#9;|&nbsp;&#9;  
+				<Link to="following">{following} Following</Link>
 			</p>
 		</div>
 	);

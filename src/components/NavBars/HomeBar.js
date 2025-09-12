@@ -6,34 +6,43 @@ import "./NavBar.css";
 import {Link} from "react-router-dom";
 import Btn from "../Buttons/Btn";
 
+
 function HomeBar(props) {
 	let icon_color = Array(3).fill("#F9F9F9");
 	let selected = props.index === undefined || props.index >= 3 || props.index < 0 ? -1 : props.index;
 	icon_color[selected] = "#FF0048";
 	let [popup, setPopUp] = useState(<></>);
 
-	const openProfile = async () => {
-		// Attempt to open user profile
-		// Opens if user loaded otherwise do nothing
-		setPopUp(
+	const loadingPopUp = () => {
+		return (
 			<PopUp 
 				title="Loading your story!" 
 				message="Loading your profile" 
 				loader={true} 
 			/>
 		);
+	}
+
+	const errorPopUp = () => {
+		return (
+			<PopUp
+				title="Not signed in!"
+				message="You need to sign in to access your board.">
+				<Btn className="active" onClick={() => window.location.href = "/login"}>Sign In</Btn>
+				<Btn onClick={() => setPopUp(<></>)}>Close</Btn>
+			</PopUp>
+		);
+	}
+
+	const openProfile = async () => {
+		// Attempt to open user profile
+		// Opens if user loaded otherwise do nothing
+		setPopUp(loadingPopUp());
+
 		if (currentUser) {
 			window.location.href = "/@" + currentUser.username;
 		} else {
-			setPopUp(
-				<PopUp
-					title="Not signed in!"
-					message="You need to sign in to access your board."
-				>
-					<Btn className="active" onClick={() => window.location.href = "/login"}>Sign In</Btn>
-					<Btn onClick={() => setPopUp(<></>)}>Close</Btn>
-				</PopUp>
-			);
+			setPopUp(errorPopUp());
 		}
 	}
 

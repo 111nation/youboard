@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import {auth, db} from "./firebase";
 import {doc, getDoc, getDocs, setDoc, query, limit, where, collection} from "firebase/firestore";
+import {followersAndFollowingCount} from "./follow";
 
 /* TODO: 
  * Error handling for when NULL document returned
@@ -45,7 +46,7 @@ export class User {
 		});
 		const userDoc = await getDoc(docRef);
 
-		return new User(user.uid, username, email, userDoc);
+		return new User(user.uid, username, email, userDoc, [], []);
 	}
 
 	static async signInWithEmail(email, password) {

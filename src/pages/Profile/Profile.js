@@ -14,45 +14,71 @@ const onSettingsClick = () => {
 	window.location.href = "/settings";
 }
 
+// Own profile - Settings button
+// Other profile - Follow button
+const getControl = (user) => {
+	let username = currentUser ? currentUser.username : "";
+	if (username === user.substring(1)) { // Ignore '@' symbol
+		return <Btn className="" onClick={onSettingsClick}>Settings</Btn>;
+	} else {
+		return <FollowBtn target={user.substring(1)}/>
+	}
+}
+
+const loadingPopUp = () => {
+	return (
+		<PopUp 
+			title="Loading your story!" 
+			message="Loading your profile" 
+			loader={true} 
+		/>
+	);
+}
+
+const errorPopUp = (title, msg) => {
+	return (
+		<PopUp
+			title={title}
+			message={msg}>
+			<Btn onClick={() => window.history.back()}>Go Back</Btn>
+		</PopUp>
+	);
+}
 
 function Profile() {
 	const {user} = useParams();
-	let [userExists, setUserExists] = useState(false);
 	let [popup, setPopUp] = useState(<></>);
+	let [userObj, setUser] = useState(null);
+
+
+	const loadUser = async () => {
+		setPopUp(loadingPopUp());
+		let userDat = await User.getFromUsername(user.substring(1));
+		setUser(userDat);
+		setPopUp(<></>);
+	}
 
 	// Ensure that we viewing an existing user
 	useEffect(() => {
-		User.getFromUsername(user.substring(1))
-		.then(() => setUserExists(true))
-		.catch ((e) => {
+		loadUser()
+		.catch((e) => {
+			// Failed to load user
 			switch (e.code) {
 				case USER_ERRORS.USER_DATA_NOT_FOUND:
-					return window.location.href = "/404/User does not exist :(";
+					setPopUp(errorPopUp("User not found!", "This user hasn't joined youboard, yet!"));
 				default:
-					return window.location.href = "/404/Failed to fetch user :(";
+					return setPopUp(errorPopUp("Errors!", "Failed to fetch account :("));
 			}
 		})
 	}, []);
 
-	if (!userExists) return <></>;
-
-	// Own profile - Settings button
-	// Other profile - Follow button
-	const getControl = () => {
-		let username = currentUser ? currentUser.username : "";
-		if (username === user.substring(1)) { // Ignore '@' symbol
-			return <Btn className="" onClick={onSettingsClick}>Settings</Btn>;
-		} else {
-			return <FollowBtn target={user.substring(1)}/>
-		}
-	}
 
 	return (
 		<div className="page profile-page">
 			{popup}
 			<div className="profile-info-wrap">
-				<BigProfile username={user.substring(1)} />	
-				{getControl()}
+				<BigProfile user={userObj} />	
+				{getControl(user)}
 			</div>
 
 			<Posts />
