@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import {auth, db} from "./firebase";
 import {doc, getDoc, getDocs, setDoc, query, limit, where, collection} from "firebase/firestore";
 
@@ -92,6 +92,13 @@ export class User {
 
 		return new User(uid, username, email, userDoc);
 	}
+
+	async signOutUser() {
+		if (currentUser.uid !== this.uid) return;
+		
+		await signOut(auth);
+		localStorage.removeItem("currentUser");
+	}
 };
 
 export let currentUser = getCurrentUserFromLocalStorage();
@@ -102,11 +109,18 @@ function getCurrentUserFromLocalStorage() {
 	let localStorageUser = JSON.parse(localStorage.getItem("currentUser"));
 	const user = auth.currentUser;
 
+	if (!localStorageUser) return null;
+
 	if (user && user.uid === localStorageUser.uid) {
 		return null;
 	}
 
-	return localStorageUser;
+	return new User(
+		localStorageUser.uid,
+		localStorageUser.username,
+		localStorageUser.email,
+		localStorageUser.userDoc || null
+	);
 }
 
 export function setCurrentUser(x) {

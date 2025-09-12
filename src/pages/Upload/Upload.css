@@ -7,9 +7,29 @@
 
 .upload-photo {
 	box-sizing: border-box;
-	background-color: rgba(105, 105, 105, 1);
 	width: 100vw;
-	height: 30vh;
+	position: relative;
+	display: flex;
+	justify-content: center;
+}
+
+.upload-photo img {
+	max-width: 100vw;
+	max-height: 40vh;
+}
+
+.upload-photo input[type="file"] {
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 100;
+}
+
+.upload-photo::file-selector-button {
+	display: none;
 }
 
 .select-photo-option {

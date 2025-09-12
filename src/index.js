@@ -13,11 +13,8 @@ import RedirectErrorPage from "./404";
 import {currentUser} from "./user";
 import Upload from "./pages/Upload/Upload";
 import Settings from "./pages/Settings/Settings";
-import PopUp from "./components/PopUp/PopUp";
 
 function App() {
-	if (!currentUser) window.location.href = "/login";
-
 	return (
 		<>
 		<BrowserRouter>

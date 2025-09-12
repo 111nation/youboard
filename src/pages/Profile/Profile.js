@@ -8,6 +8,7 @@ import BigProfile from "../../components/Profiles/BigProfile";
 import "./Profile.css";
 import {currentUser, User, USER_ERRORS} from "../../user";
 import {useEffect, useState} from "react";
+import PopUp from "../../components/PopUp/PopUp";
 
 const onSettingsClick = () => {
 	window.location.href = "/settings";
@@ -17,6 +18,7 @@ const onSettingsClick = () => {
 function Profile() {
 	const {user} = useParams();
 	let [userExists, setUserExists] = useState(false);
+	let [popup, setPopUp] = useState(<></>);
 
 	// Ensure that we viewing an existing user
 	useEffect(() => {
@@ -47,6 +49,7 @@ function Profile() {
 
 	return (
 		<div className="page profile-page">
+			{popup}
 			<div className="profile-info-wrap">
 				<BigProfile username={user.substring(1)} />	
 				{getControl()}
