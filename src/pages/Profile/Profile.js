@@ -9,6 +9,7 @@ import "./Profile.css";
 import {currentUser, User, USER_ERRORS} from "../../user";
 import {useEffect, useState} from "react";
 import PopUp from "../../components/PopUp/PopUp";
+import {followersAndFollowingCount} from "../../follow";
 
 const onSettingsClick = () => {
 	window.location.href = "/settings";
@@ -48,13 +49,24 @@ const errorPopUp = (title, msg) => {
 function Profile() {
 	const {user} = useParams();
 	let [popup, setPopUp] = useState(<></>);
-	let [userObj, setUser] = useState(null);
+	
+	let [username, setUsername] = useState("");
+	let [followers, setFollowers] = useState(0);
+	let [following, setFollowing] = useState(0);
 
 
 	const loadUser = async () => {
 		setPopUp(loadingPopUp());
-		let userDat = await User.getFromUsername(user.substring(1));
-		setUser(userDat);
+
+		let result = await User.getFromUsername(user.substring(1));
+
+		// Get followers
+		let [followers, following] = await followersAndFollowingCount(result.uid);
+
+		setUsername(result.username);
+		setFollowers(followers);
+		setFollowing(following);
+
 		setPopUp(<></>);
 	}
 
@@ -72,12 +84,11 @@ function Profile() {
 		})
 	}, []);
 
-
 	return (
 		<div className="page profile-page">
 			{popup}
 			<div className="profile-info-wrap">
-				<BigProfile user={userObj} />	
+				<BigProfile username={username} followers={followers} following={following} />	
 				{getControl(user)}
 			</div>
 
