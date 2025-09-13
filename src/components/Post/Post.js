@@ -1,22 +1,34 @@
+import {useEffect, useState} from "react";
 import FollowBtn from "../Buttons/FollowBtn";
 import VisitBtn from "../Buttons/VisitBtn";
 import UserInfo from "../Profiles/UserInfo";
 import "./Post.css";
+import {currentUser} from "../../user";
 
-function Post() {
+function Post(props) {
+	let [control, setControl] = useState(<></>);
+
+	useEffect(() => {
+		if (currentUser.username === props.username) {
+			setControl(<></>);
+		} else {
+			setControl(<FollowBtn target={props.username} />);
+		}
+	}
+	, [props.username])
+
 	return (
 		<div className="post-wrap">
 			<div className="img-wrap">
-				<img className="post-img"/>
-				<VisitBtn />
+				<img src={props.image ? props.image : null} className="post-img"/>
+				{props.link && <VisitBtn onClick={() => window.location.href=props.link}/>}
 			</div>
 			<div className="user-info">
-				<UserInfo />
-				<FollowBtn />
+				<UserInfo username={props.username} followers={props.followers} />
+				{control}
 			</div>
 			<div className="post-desc">
-				<p>Im so sad :(</p>
-				<p className="hashtag">#sadboy #sadboylife</p>
+				{props.description}
 			</div>
 		</div>
 	);

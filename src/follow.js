@@ -27,6 +27,7 @@ export async function isFollowing(target_uid, follower_uid) {
 }
 
 export async function follow(target_uid, follower_uid) {
+	if (target_uid === follower_uid) return;
 	if (await isFollowing(target_uid, follower_uid)) return;
 
 	// Check if user's document exists
@@ -43,6 +44,7 @@ export async function follow(target_uid, follower_uid) {
 }
 
 export async function unfollow(target_uid, follower_uid) {
+	if (target_uid === follower_uid) return;
 	const collectionRef = collection(db, "follows");
 
 	const q = query(

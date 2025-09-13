@@ -1,11 +1,6 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import {auth, db} from "./firebase";
 import {doc, getDoc, getDocs, setDoc, query, limit, where, collection} from "firebase/firestore";
-import {followersAndFollowingCount} from "./follow";
-
-/* TODO: 
- * Error handling for when NULL document returned
- */
 
 async function getDocFromUsername(username) {
 	const q = query(

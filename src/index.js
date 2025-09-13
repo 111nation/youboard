@@ -8,7 +8,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Search from "./pages/Search/Search";
 import FollowList from "./pages/FollowList/FollowList";
 import Profile from "./pages/Profile/Profile";
-import Post from "./pages/PostView/PostView";
+import PostView from "./pages/PostView/PostView";
 import RedirectErrorPage from "./404";
 import Upload from "./pages/Upload/Upload";
 import Settings from "./pages/Settings/Settings";
@@ -27,7 +27,7 @@ function App() {
 				<Route path="/search/:query" element={<Search />} />
 				<Route path="/:user/followers" element={<FollowList title="Followers"/>} />
 				<Route path="/:user/following" element={<FollowList title="Following"/>} />
-				<Route path="/post/:id" element={<Post />} />
+				<Route path="/post/:id" element={<PostView />} />
 				<Route path="/upload" element={<Upload />} />
 				<Route path="/settings" element={<Settings />} />
 			</Routes>

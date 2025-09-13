@@ -13,7 +13,7 @@
 	width: 100vw;
 	height: 6rem;
 	box-sizing: border-box;
-	justify-content: space-evenly;
+	justify-content: flex-start;
 
 	display: flex;
 
@@ -23,7 +23,7 @@
 .result-profile-wrap {
 	height: 100%;
 	aspect-ratio: 1/1;
-	margin: 0;
+	margin: 0 0.8em;
 	padding: 0;
 
 

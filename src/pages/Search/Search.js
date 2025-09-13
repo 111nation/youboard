@@ -2,27 +2,39 @@ import "./Search.css"
 import HomeBar from "../../components/NavBars/HomeBar";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Posts from "../../components/Cards/Posts";
-import {Link, useParams} from "react-router-dom";
-import {auth} from "../../firebase";
-import {onAuthStateChanged} from "firebase/auth";
+import {useParams} from "react-router-dom";
+import {searchForProfiles} from "../../search";
+import {useEffect, useState} from "react";
 
-function ProfileResult() {
+function ProfileResult(props) {
+	const onClick = () => {
+		if (!props.username) return;
+		window.location.href = "/@" + props.username;
+	}
+
 	return (
-		<Link to="/@sadboy">
-			<div className="result-profile-wrap">
-				<img className="result-profile-img profile" />
-				<p className="handle">@sadboy</p>
-			</div>
-		</Link>
+		<div onClick={onClick} className="result-profile-wrap">
+			<img className="result-profile-img profile" />
+			<p className="handle">{"@" + props.username}</p>
+		</div>
 	);
 }
 
 function Search() {
-	onAuthStateChanged(auth, (user) => {
-		if (!user) window.location.href = "/login";
-	});
-
 	const { query } = useParams();
+	let [profile_result, setProfileResult] = useState([]);
+
+	useEffect(() => {
+		searchForProfiles(query) 
+		.then(res => setProfileResult(res))
+		.catch(e => console.log(e));
+	}, [])
+
+	let result = (
+		<div className="profile-results">
+			{profile_result.map((username, i) => <ProfileResult key={i} username={username}/>)}
+		</div>
+	);
 
 	return (
 		<div className="page search-page">
@@ -30,11 +42,7 @@ function Search() {
 				<SearchBar placeholder={query}/>
 				<p className="subheading">{"\"" + query + "\""}</p>
 			</div>
-			<div className="profile-results">
-				<ProfileResult />
-				<ProfileResult />
-				<ProfileResult />
-			</div>
+			{profile_result.length ? result : null}
 			<Posts />
 			<HomeBar />
 		</div>

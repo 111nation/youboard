@@ -1,5 +1,6 @@
 import Loader from "./Loader/Loader";
 import "./PopUp.css";
+import Post from "../Post/Post";
 
 function PopUp(props) {
 	return (

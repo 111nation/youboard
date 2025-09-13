@@ -11,6 +11,8 @@ function FollowBtn(props) {
 		.then(async (user) => {
 			if (await isFollowing(user.uid, currentUser.uid)) {
 				setFollowing(true);
+			} else {
+				setFollowing(false);
 			}
 		}) 
 		.catch(() => {})
