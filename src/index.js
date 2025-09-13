@@ -10,7 +10,6 @@ import FollowList from "./pages/FollowList/FollowList";
 import Profile from "./pages/Profile/Profile";
 import Post from "./pages/PostView/PostView";
 import RedirectErrorPage from "./404";
-import {currentUser} from "./user";
 import Upload from "./pages/Upload/Upload";
 import Settings from "./pages/Settings/Settings";
 

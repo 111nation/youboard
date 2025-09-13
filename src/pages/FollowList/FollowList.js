@@ -4,65 +4,71 @@ import SmallProfile from "../../components/Profiles/SmallProfile";
 import TopNav from "../../components/TopNav/TopNav";
 import "./FollowList.css";
 import {useParams} from "react-router-dom";
-import {User, USER_ERRORS} from "../../user";
-import {followers, following} from "../../follow";
+import {currentUser, User, USER_ERRORS} from "../../user";
+import {followers, following, numFollowers} from "../../follow";
+import PopUp from "../../components/PopUp/PopUp";
+import Btn from "../../components/Buttons/Btn";
+import Loader from "../../components/PopUp/Loader/Loader";
+
+const errorPopUp = (title, msg) => {
+	return (
+		<PopUp
+			title={title}
+			message={msg}>
+			<Btn onClick={() => window.history.back()}>Go Back</Btn>
+		</PopUp>
+	);
+}
 
 function FollowList(props) {
 	const {user} = useParams();
-	let [userExists, setUserExists] = useState(false);
-	let [followers_list, setFollowers] = useState([]);
+	let [accounts, setAccounts] = useState([]);
+	let [stats, setStats] = useState([]);
+	let [popup, setPopUp] = useState(<></>);
+	let [loader, setLoader] = useState(<></>);
 
-	// Ensure that we viewing an existing user
+
+	const loadFollowers = async () => {
+		setLoader(<Loader />);
+		let result = await User.getFromUsername(user.substring(1));
+		let list = await (props.title === "Followers" ? followers(result.uid) : following(result.uid));
+	
+		// Get follower count for each user
+		let stats = await Promise.all(
+			list.map((user) => numFollowers(user.uid)),
+		);
+
+		setLoader(<></>);
+		setAccounts(list);
+		setStats(stats);
+	}
+
 	useEffect(() => {
-		User.getFromUsername(user.substring(1))
-		.then(() => setUserExists(true))
+		loadFollowers()
 		.catch ((e) => {
+			// Failed to load user
 			switch (e.code) {
 				case USER_ERRORS.USER_DATA_NOT_FOUND:
-					return window.location.href = "/404/User does not exist :(";
+					return setPopUp(errorPopUp("User not found!", user + " hasn't joined youboard, yet!"));
 				default:
-					return window.location.href = "/404/Failed to fetch user :(";
+					return setPopUp(errorPopUp("Errors!", "Failed to fetch account :("));
 			}
 		})
 	}, []);
 
-	useEffect(() => {
-		if (!userExists) return;
-		User.getFromUsername(user.substring(1))
-		.then(async (user) => {
-			// Fetch followers
-			try {
-				if (props.title === "Followers") {
-					setFollowers(await followers(user.uid));
-				} else {
-					setFollowers(await following(user.uid));
-				}
-
-			} catch (e) {
-				console.log("Failed to fetch followers");
-				console.log(e.message);
-			}
-		}) 
-		.catch((e) => console.log(e.code));
-	}, [userExists]);
-
-	if (!userExists) return (
-		<>
-			<TopNav title={props.title}/>
-			<HomeBar />
-		</>
-	);
-
 	return (
 		<>
+			{popup}
 			<TopNav title={props.title}/>
 			<div className="page followlist-page">
+				{loader}
 				<div className="followlist-wrap">
-					{followers_list.map(
-						(user, index) => <SmallProfile key={index} username={user.username} />
+					{accounts.map(
+						(user, i) => 
+							<SmallProfile key={i} username={user.username} followers={stats[i]}/>
 					)}
 				</div>
-				<HomeBar />
+				<HomeBar index={currentUser && user.substring(1) === currentUser.username ? 2 : -1} />
 			</div>
 		</>
 	);

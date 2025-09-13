@@ -18,19 +18,28 @@ const onSettingsClick = () => {
 // Own profile - Settings button
 // Other profile - Follow button
 const getControl = (user) => {
-	let username = currentUser ? currentUser.username : "";
-	if (username === user.substring(1)) { // Ignore '@' symbol
+	if (currentUser && currentUser.username === user.substring(1)) { // Ignore '@' symbol
 		return <Btn className="" onClick={onSettingsClick}>Settings</Btn>;
 	} else {
 		return <FollowBtn target={user.substring(1)}/>
 	}
 }
 
-const loadingPopUp = () => {
+const loadingPopUp = (username) => {
+	if (currentUser && username.substring(1) === currentUser.username) {
+		return (
+			<PopUp 
+				title="Loading your story!" 
+				message="Loading your profile" 
+				loader={true} 
+			/>
+		);
+	}
+
 	return (
 		<PopUp 
-			title="Loading your story!" 
-			message="Loading your profile" 
+			title={"Loading profile!"}
+			message={"Loading " + username + "'s profile!"}
 			loader={true} 
 		/>
 	);
@@ -56,7 +65,7 @@ function Profile() {
 
 
 	const loadUser = async () => {
-		setPopUp(loadingPopUp());
+		setPopUp(loadingPopUp(user));
 
 		let result = await User.getFromUsername(user.substring(1));
 
@@ -77,7 +86,7 @@ function Profile() {
 			// Failed to load user
 			switch (e.code) {
 				case USER_ERRORS.USER_DATA_NOT_FOUND:
-					setPopUp(errorPopUp("User not found!", "This user hasn't joined youboard, yet!"));
+					return setPopUp(errorPopUp("User not found!", user + " hasn't joined youboard, yet!"));
 				default:
 					return setPopUp(errorPopUp("Errors!", "Failed to fetch account :("));
 			}
@@ -94,7 +103,7 @@ function Profile() {
 
 			<Posts />
 			<BackBtn />
-			<HomeBar index={2}/>
+			<HomeBar index={currentUser && username === currentUser.username ? 2 : -1}/>
 		</div>
 	);
 }

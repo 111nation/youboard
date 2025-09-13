@@ -61,7 +61,7 @@ export async function unfollow(target_uid, follower_uid) {
 }
 
 export async function followers(target_uid) {
-	// Get all followers
+	// Get all followers uid
 	const q = query(
 		collection(db, "follows"),
 		where("target_uid", "==", target_uid), 
@@ -77,7 +77,7 @@ export async function followers(target_uid) {
 }
 
 export async function numFollowers(target_uid) {
-	// Get all followers
+	// Get followers count
 	const q = query(
 		collection(db, "follows"),
 		where("target_uid", "==", target_uid), 
@@ -89,7 +89,7 @@ export async function numFollowers(target_uid) {
 }
 
 export async function following(target_uid) {
-	// Get all followers
+	// Get all following uid
 	const q = query(
 		collection(db, "follows"),
 		where("follower_uid", "==", target_uid), 
@@ -105,7 +105,7 @@ export async function following(target_uid) {
 }
 
 export async function numFollowing(target_uid) {
-	// Get all followers
+	// Get all following count
 	const q = query(
 		collection(db, "follows"),
 		where("follower_uid", "==", target_uid), 
