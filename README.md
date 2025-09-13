@@ -40,10 +40,11 @@ _Seems like the X algorithm really liked my designs!_
 <br />
 <img width="50%" alt="image" src="https://github.com/user-attachments/assets/47e0c3e4-3f4b-4694-a9ed-d0e0b0cd6a6e" />
 
-### User log in
+### Users and Profile display
 
-Users can log in using Firebase's `createNewUserEmailAndPassword` and `signInWithEmailAndPassword` functions. Each user is allocated their own document corresponding to their `uid` under the `/users/` collection in the Firestore Database. This document will store user profile details like their custom username and email. 
-Each follow request will be a document under `/follows/` in the Firestore Database. Each follow document will contain data on which account initiated the follow and which account the follow belongs to. Using queries, we will be able to easily query all follow lists of related accounts.
+Each user is allocated their own document corresponding to their `uid` under the `/users/` collection in the Firestore Database. Users go through the User class in `src/user.js` to sign in or create a new account. The user class handles storing and retrieving a user's email and username. After successful login, the current user's assigned class is saved under `currentUser` and `localStorage`. Saving the user's information under `currentUser` prevents reading from the Firestore Database wastefully when a page is changed or refreshed, or we need the current user's data. The user class also serves the purpose of fetching other users' data in a structured format.
+
+All existing users' information can be viewed under the `src/pages/Profile/Profile.js` page, which is routed under `/:user`. For example, `/@dualipa` will open the page of *dualipa*. The *Profile page* loads the user's information **once**, then passes it down to child elements, for example, `src/components/Profiles/BigProfile.js`. This data gets passed down instead of being reread from the database. There might be multiple sub-components that take up their own read request! Pop-ups will be used to guide users through errors or loading. The pop-up component is under `src/components/PopUp/PopUp.js`
 
 <div width="40%"><video src="https://github.com/user-attachments/assets/09cfeb77-971a-457a-b1ea-b58f79272bed"></video></div>
 
