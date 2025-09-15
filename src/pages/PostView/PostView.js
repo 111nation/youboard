@@ -55,6 +55,7 @@ function PostView() {
           link={link}
           username={username}
           followers={followers}
+          id={id}
         />
 
         <Posts />

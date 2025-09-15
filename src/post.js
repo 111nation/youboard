@@ -1,8 +1,15 @@
 import Compressor from "compressorjs";
 import { currentUser, USER_ERRORS } from "./user";
-import { addDoc, collection, deleteDoc, doc, getDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  Timestamp,
+} from "firebase/firestore";
 import { db, storage } from "./firebase";
-import { getBlob, ref, uploadBytes } from "firebase/storage";
+import { deleteObject, getBlob, ref, uploadBytes } from "firebase/storage";
 
 export const MAX_FILE_SIZE = 3e6;
 
@@ -37,6 +44,20 @@ export async function compressImage(image) {
   }
 }
 
+export async function getImageFromId(post_id) {
+  let imageRef = ref(storage, "images/" + post_id);
+  let file = await getBlob(imageRef);
+  return file;
+}
+
+export async function deletePost(post_id) {
+  let imageRef = ref(storage, "images/" + post_id);
+  await Promise.all([
+    deleteObject(imageRef),
+    deleteDoc(doc(db, "posts", post_id)),
+  ]);
+}
+
 function generateDescriptionKeywords(str) {
   // Create key words to allow indexing
   // Don't create keywords that have spaces
@@ -47,19 +68,23 @@ function generateDescriptionKeywords(str) {
     .replace(/[^a-zA-Z0-9 ]/g, "")
     .split(" ")
     .filter(Boolean); // Remove undefines or empty strings
-  let keywords = [];
+  let keywords = new Set();
 
   words.forEach((word) => {
     // A keyword can only be added if:
     // Length is greater than 3
     // Or is not a duplicate
     const trimmed = word.trim();
-    if (trimmed.length > 3 && !keywords.includes(trimmed)) {
-      keywords.push(trimmed);
+    for (let i = 0; i < trimmed.length; i++) {
+      for (let j = i + 4; j <= trimmed.length; j++) {
+        // keywords longer than 3 chars considered
+        let keyword = trimmed.substr(i, j);
+        keywords.add(keyword);
+      }
     }
   });
 
-  return keywords;
+  return Array.from(keywords);
 }
 
 export class Post {
@@ -91,6 +116,7 @@ export class Post {
       description: description,
       link: link,
       keywords: generateDescriptionKeywords(description),
+      createdAt: Timestamp.now(),
     };
 
     let docRef = await addDoc(collection(db, "posts"), docData);
@@ -123,8 +149,7 @@ export class Post {
     let link = docSnap.data().link;
     let uid = docSnap.data().uid;
 
-    let imageRef = ref(storage, "images/" + docSnap.id);
-    let file = await getBlob(imageRef);
+    let file = await getImageFromId(post_id);
 
     return new Post(post_id, file, description, link, uid);
   }

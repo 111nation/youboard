@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import BackBtn from "../../components/Buttons/BackBtn";
 import Btn from "../../components/Buttons/Btn";
 import FollowBtn from "../../components/Buttons/FollowBtn";
@@ -6,106 +6,123 @@ import Posts from "../../components/Cards/Posts";
 import HomeBar from "../../components/NavBars/HomeBar";
 import BigProfile from "../../components/Profiles/BigProfile";
 import "./Profile.css";
-import {currentUser, User, USER_ERRORS} from "../../user";
-import {useEffect, useState} from "react";
+import { currentUser, User, USER_ERRORS } from "../../user";
+import { useEffect, useState } from "react";
 import PopUp from "../../components/PopUp/PopUp";
-import {followersAndFollowingCount} from "../../follow";
+import { followersAndFollowingCount } from "../../follow";
+import { getUserPosts } from "../../results";
 
 const onSettingsClick = () => {
-	window.location.href = "/settings";
-}
+  window.location.href = "/settings";
+};
 
 // Own profile - Settings button
 // Other profile - Follow button
 const getControl = (user) => {
-	if (currentUser && currentUser.username === user.substring(1)) { // Ignore '@' symbol
-		return <Btn className="" onClick={onSettingsClick}>Settings</Btn>;
-	} else {
-		return <FollowBtn target={user.substring(1)}/>
-	}
-}
+  if (currentUser && currentUser.username === user.substring(1)) {
+    // Ignore '@' symbol
+    return (
+      <Btn className="" onClick={onSettingsClick}>
+        Settings
+      </Btn>
+    );
+  } else {
+    return <FollowBtn target={user.substring(1)} />;
+  }
+};
 
 const loadingPopUp = (username) => {
-	if (currentUser && username.substring(1) === currentUser.username) {
-		return (
-			<PopUp 
-				title="Loading your story!" 
-				message="Loading your profile" 
-				loader={true} 
-			/>
-		);
-	}
+  if (currentUser && username.substring(1) === currentUser.username) {
+    return (
+      <PopUp
+        title="Loading your story!"
+        message="Loading your profile"
+        loader={true}
+      />
+    );
+  }
 
-	return (
-		<PopUp 
-			title={"Loading profile!"}
-			message={"Loading " + username + "'s profile!"}
-			loader={true} 
-		/>
-	);
-}
+  return (
+    <PopUp
+      title={"Loading profile!"}
+      message={"Loading " + username + "'s profile!"}
+      loader={true}
+    />
+  );
+};
 
 const errorPopUp = (title, msg) => {
-	return (
-		<PopUp
-			title={title}
-			message={msg}>
-			<Btn onClick={() => window.history.back()}>Go Back</Btn>
-		</PopUp>
-	);
-}
+  return (
+    <PopUp title={title} message={msg}>
+      <Btn onClick={() => window.history.back()}>Go Back</Btn>
+    </PopUp>
+  );
+};
 
 function Profile() {
-	const {user} = useParams();
-	let [popup, setPopUp] = useState(<></>);
-	
-	let [username, setUsername] = useState("");
-	let [followers, setFollowers] = useState(0);
-	let [following, setFollowing] = useState(0);
+  const { user } = useParams();
+  let [popup, setPopUp] = useState(<></>);
 
+  let [username, setUsername] = useState("");
+  let [followers, setFollowers] = useState(0);
+  let [following, setFollowing] = useState(0);
+  let [posts, setPosts] = useState([]);
 
-	const loadUser = async () => {
-		setPopUp(loadingPopUp(user));
+  const loadUser = async () => {
+    setPopUp(loadingPopUp(user));
 
-		let result = await User.getFromUsername(user.substring(1));
+    let result = await User.getFromUsername(user.substring(1));
 
-		// Get followers
-		let [followers, following] = await followersAndFollowingCount(result.uid);
+    const [[followers, following], posts] = await Promise.all([
+      followersAndFollowingCount(result.uid), // Followers
+      getUserPosts(result.uid), // Posts
+    ]);
 
-		setUsername(result.username);
-		setFollowers(followers);
-		setFollowing(following);
+    setUsername(result.username);
+    setFollowers(followers);
+    setFollowing(following);
+    setPosts(posts);
 
-		setPopUp(<></>);
-	}
+    setPopUp(<></>);
+  };
 
-	// Ensure that we viewing an existing user
-	useEffect(() => {
-		loadUser()
-		.catch((e) => {
-			// Failed to load user
-			switch (e.code) {
-				case USER_ERRORS.USER_DATA_NOT_FOUND:
-					return setPopUp(errorPopUp("User not found!", user + " hasn't joined youboard, yet!"));
-				default:
-					return setPopUp(errorPopUp("Errors!", "Failed to fetch account :("));
-			}
-		})
-	}, []);
+  // Ensure that we viewing an existing user
+  useEffect(() => {
+    loadUser().catch((e) => {
+      // Failed to load user
+      switch (e.code) {
+        case USER_ERRORS.USER_DATA_NOT_FOUND:
+          return setPopUp(
+            errorPopUp(
+              "User not found!",
+              user + " hasn't joined youboard, yet!",
+            ),
+          );
+        default:
+          return setPopUp(errorPopUp("Errors!", "Failed to fetch account :("));
+      }
+    });
+  }, []);
 
-	return (
-		<div className="page profile-page">
-			{popup}
-			<div className="profile-info-wrap">
-				<BigProfile username={username} followers={followers} following={following} />	
-				{getControl(user)}
-			</div>
+  return (
+    <div className="page profile-page">
+      {popup}
+      <div className="profile-info-wrap">
+        <BigProfile
+          username={username}
+          followers={followers}
+          following={following}
+        />
+        {getControl(user)}
+      </div>
 
-			<Posts />
-			<BackBtn />
-			<HomeBar index={currentUser && username === currentUser.username ? 2 : -1}/>
-		</div>
-	);
+      <Posts posts={posts} />
+      <BackBtn />
+      <HomeBar
+        index={currentUser && username === currentUser.username ? 2 : -1}
+      />
+    </div>
+  );
 }
 
 export default Profile;

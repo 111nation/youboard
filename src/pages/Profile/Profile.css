@@ -1,17 +1,20 @@
 .profile-info-wrap {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	padding: 3vh 0 2vh 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3vh 0 2vh 0;
 
-	position: sticky;
-	top: -2vh;
-	left: 0;
+  position: sticky;
+  top: -2vh;
+  left: 0;
 
-	background: #121212;
+  background: #121212;
+  border-bottom: 1px solid rgba(105, 105, 105, 0.55);
 }
 
-.profile-info-wrap .btn, .profile-info-wrap .follow-btn {
-	margin-top: 1.4em;
+.profile-info-wrap .btn,
+.profile-info-wrap .follow-btn {
+  margin-top: 1.4em;
 }

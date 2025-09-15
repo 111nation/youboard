@@ -29,18 +29,13 @@ function Search() {
 
   const getResults = async () => {
     setLoading(true);
-    let [profile_result, post_results] = await Promise.all([
+    let [profile_results, post_results] = await Promise.all([
       searchForProfiles(query),
       searchForPosts(query),
     ]);
 
-    // Get posts in their objects
-    let posts = await Promise.all(
-      post_results.map((post_id) => Post.load(post_id)),
-    );
-
-    setProfileResult(profile_result);
-    setPostResult(posts);
+    setProfileResult(profile_results);
+    setPostResult(post_results);
     setLoading(false);
   };
 
@@ -52,8 +47,8 @@ function Search() {
 
   let result = (
     <div className="profile-results">
-      {profile_results.map((username, i) => (
-        <ProfileResult key={i} username={username} />
+      {profile_results.map((user, i) => (
+        <ProfileResult key={i} username={user.username} />
       ))}
     </div>
   );
