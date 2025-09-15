@@ -44,6 +44,7 @@ function generateDescriptionKeywords(str) {
   const words = str
     .toLowerCase()
     .replace(/\n/g, " ")
+    .replace(/[^a-zA-Z0-9 ]/g, "")
     .split(" ")
     .filter(Boolean); // Remove undefines or empty strings
   let keywords = [];
@@ -62,7 +63,8 @@ function generateDescriptionKeywords(str) {
 }
 
 export class Post {
-  constructor(file, description, link, uid) {
+  constructor(id, file, description, link, uid) {
+    this.id = id;
     this.file = file;
     this.description = description;
     this.link = link;
@@ -97,7 +99,13 @@ export class Post {
       let doc = await getDoc(docRef);
       let imageRef = ref(storage, "images/" + doc.id);
       await uploadBytes(imageRef, compressedFile);
-      return new Post(compressedFile, description, link, currentUser.uid);
+      return new Post(
+        doc.id,
+        compressedFile,
+        description,
+        link,
+        currentUser.uid,
+      );
     } catch (e) {
       deleteDoc(docRef);
       throw e;
@@ -118,6 +126,6 @@ export class Post {
     let imageRef = ref(storage, "images/" + docSnap.id);
     let file = await getBlob(imageRef);
 
-    return new Post(file, description, link, uid);
+    return new Post(post_id, file, description, link, uid);
   }
 }

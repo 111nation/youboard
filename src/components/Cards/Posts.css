@@ -38,6 +38,8 @@
   border-radius: 12px;
   margin-bottom: 0.4em;
   overflow: hidden;
+  border: none;
+  padding: 0;
 }
 
 .post-card img {

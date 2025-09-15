@@ -41,6 +41,8 @@ export async function searchForPosts(searchQuery) {
 
   const querySnapshot = await getDocs(q);
 
-  const result = querySnapshot.docs;
+  const result = querySnapshot.docs.map((doc) => doc.id);
   return result;
 }
+
+export async function getHomePosts(searchQuery) {}
