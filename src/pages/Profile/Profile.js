@@ -68,8 +68,28 @@ function Profile() {
   let [following, setFollowing] = useState(0);
   let [posts, setPosts] = useState([]);
 
+  const loadCurrentUserProfile = async () => {
+    // If loading your own profile, load quicker by using "cache"
+    const [[followers, following], posts] = await Promise.all([
+      followersAndFollowingCount(currentUser.uid), // Followers
+      getUserPosts(currentUser.uid), // Posts
+    ]);
+
+    setUsername(currentUser.username);
+    setFollowers(followers);
+    setFollowing(following);
+    setPosts(posts);
+  };
+
   const loadUser = async () => {
     setPopUp(loadingPopUp(user));
+
+    if (currentUser && user.substring(1) === currentUser.username) {
+      console.log("HEY");
+      await loadCurrentUserProfile();
+      setPopUp(<></>);
+      return;
+    }
 
     let result = await User.getFromUsername(user.substring(1));
 
