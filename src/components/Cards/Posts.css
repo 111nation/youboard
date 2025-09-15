@@ -1,12 +1,12 @@
 .posts-container {
-	padding: 0.75em;
-	box-sizing: border-box;
-	width: 100vw;
-	overflow-x: hidden;
-	overflow-y: scroll;
+  padding: 0.75em;
+  box-sizing: border-box;
+  width: 100vw;
+  overflow-x: hidden;
+  overflow-y: scroll;
 
-	column-count: 2;
-	gap: 0.6em;
+  column-count: 2;
+  gap: 0.6em;
 }
 
 .post-card:nth-child(4n + 1) {
@@ -25,12 +25,24 @@
   height: 220px;
 }
 
+.post-card.loaded {
+  height: auto;
+}
+
 .post-card {
-	display: inline-block;
-	margin: 0;
-	box-sizing: border-box;
-	width: 100%;
-	background: #696969;
-	border-radius: 12px;
-	margin-bottom: 0.4em;
+  display: inline-block;
+  margin: 0;
+  box-sizing: border-box;
+  width: 100%;
+  background: #696969;
+  border-radius: 12px;
+  margin-bottom: 0.4em;
+  overflow: hidden;
+}
+
+.post-card img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  display: block;
 }

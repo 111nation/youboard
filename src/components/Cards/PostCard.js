@@ -1,15 +1,18 @@
-function PostCard() {
-	const handleClick = () => {
-		function randomIntFromInterval(min, max) { // min and max included 
-		  return Math.floor(Math.random() * (max - min + 1) + min);
-		}
+function PostCard(props) {
+  const handleClick = () => {
+    if (!props.id) return;
 
-		const rndInt = randomIntFromInterval(0, 100000);
+    window.location.href = "/post/" + props.id;
+  };
 
-		window.location.href = "/post/" + String(rndInt);
-	}
+  let className = "post-card " + (props.image ? "loaded" : "");
 
-	return <div onClick={handleClick} className="post-card"></div>;
+  return (
+    <div onClick={handleClick} className={className}>
+      {!props.image ? <div className="image-loader"></div> : ""}
+      <img src={props.image} loading="lazy" />
+    </div>
+  );
 }
 
 export default PostCard;
