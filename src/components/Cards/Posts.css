@@ -6,6 +6,7 @@
   overflow-y: scroll;
 
   column-count: 2;
+  flex-wrap: wrap;
   gap: 0.6em;
 }
 

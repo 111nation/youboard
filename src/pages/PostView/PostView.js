@@ -10,6 +10,8 @@ import { User } from "../../user";
 import { numFollowers } from "../../follow";
 import PopUp from "../../components/PopUp/PopUp";
 import Btn from "../../components/Buttons/Btn";
+import { getRelatedPosts } from "../../results";
+import HomeBar from "../../components/NavBars/HomeBar";
 
 function PostView() {
   const { id } = useParams();
@@ -20,6 +22,8 @@ function PostView() {
   let [link, setLink] = useState("");
   let [followers, setFollowers] = useState(0);
   let [hashtags, setHashtags] = useState("");
+  let [loading, setLoading] = useState(false);
+  let [related, setRelated] = useState([]);
 
   useEffect(() => {
     const loadPost = async () => {
@@ -33,6 +37,12 @@ function PostView() {
       setUsername(user.username);
       setFollowers(followers);
       setHashtags("#" + post.hashtags.join(" #"));
+
+      setLoading(true);
+      getRelatedPosts(post).then((result) => {
+        setRelated(result);
+        setLoading(false);
+      });
     };
 
     loadPost().catch(() => {
@@ -61,9 +71,10 @@ function PostView() {
           hashtags={hashtags}
         />
 
-        <Posts />
+        <p className="subheading">Discover</p>
+        <Posts loading={loading} posts={related} />
         <BackBtn />
-        <SaveBar />
+        <HomeBar />
       </div>
     </>
   );

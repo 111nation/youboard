@@ -109,13 +109,14 @@ function generateHashtags(str) {
 }
 
 export class Post {
-  constructor(id, file, description, link, uid, hashtags) {
+  constructor(id, file, description, link, uid, hashtags, keywords) {
     this.id = id;
     this.file = file;
     this.description = description;
     this.link = link;
     this.uid = uid;
     this.hashtags = hashtags;
+    this.keywords = keywords;
   }
 
   static async createNew(file, description, link) {
@@ -133,13 +134,14 @@ export class Post {
     if (compressedFile.size > 3e6) throw { code: POST_ERRORS.IMAGE_TOO_LARGE };
 
     let hashtags = generateHashtags(description);
+    let keywords = generateDescriptionKeywords(description);
 
     // Create new document
     const docData = {
       uid: currentUser.uid,
       description: description,
       link: link,
-      keywords: generateDescriptionKeywords(description),
+      keywords: keywords,
       hashtags: hashtags,
       createdAt: Timestamp.now(),
     };
@@ -157,6 +159,7 @@ export class Post {
         link,
         currentUser.uid,
         hashtags,
+        keywords,
       );
     } catch (e) {
       deleteDoc(docRef);
@@ -175,9 +178,10 @@ export class Post {
     let link = docSnap.data().link;
     let uid = docSnap.data().uid;
     let hashtags = docSnap.data().hashtags;
+    let keywords = docSnap.data().keywords;
 
     let file = await getImageFromId(post_id);
 
-    return new Post(post_id, file, description, link, uid, hashtags);
+    return new Post(post_id, file, description, link, uid, hashtags, keywords);
   }
 }
