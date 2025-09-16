@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import BackBtn from "../../components/Buttons/BackBtn";
 import Btn from "../../components/Buttons/Btn";
 import FollowBtn from "../../components/Buttons/FollowBtn";
@@ -12,8 +12,54 @@ import PopUp from "../../components/PopUp/PopUp";
 import { followersAndFollowingCount } from "../../follow";
 import { getUserPosts } from "../../results";
 
+const onSettingsClick = (nav) => {
+  nav("/settings");
+};
+
+// Own profile - Settings button
+// Other profile - Follow button
+const getControl = (user) => {
+  if (currentUser && currentUser.username === user.substring(1)) {
+    // Ignore '@' symbol
+    return (
+      <Btn className="" onClick={onSettingsClick}>
+        Settings
+      </Btn>
+    );
+  } else {
+    return <FollowBtn target={user.substring(1)} />;
+  }
+};
+
+const loadingPopUp = (username) => {
+  if (currentUser && username.substring(1) === currentUser.username) {
+    return (
+      <PopUp
+        title="Loading your story!"
+        message="Loading your profile"
+        loader={true}
+      />
+    );
+  }
+
+  return (
+    <PopUp
+      title={"Loading profile!"}
+      message={"Loading " + username + "'s profile!"}
+      loader={true}
+    />
+  );
+};
+
+const errorPopUp = (title, msg) => {
+  return (
+    <PopUp title={title} message={msg}>
+      <Btn onClick={() => window.history.back()}>Go Back</Btn>
+    </PopUp>
+  );
+};
+
 function Profile() {
-  const navigate = useNavigate();
   const { user } = useParams();
   let [popup, setPopUp] = useState(<></>);
 
@@ -21,53 +67,6 @@ function Profile() {
   let [followers, setFollowers] = useState(0);
   let [following, setFollowing] = useState(0);
   let [posts, setPosts] = useState([]);
-
-  const onSettingsClick = () => {
-    navigate("/settings");
-  };
-
-  // Own profile - Settings button
-  // Other profile - Follow button
-  const getControl = (user) => {
-    if (currentUser && currentUser.username === user.substring(1)) {
-      // Ignore '@' symbol
-      return (
-        <Btn className="" onClick={onSettingsClick}>
-          Settings
-        </Btn>
-      );
-    } else {
-      return <FollowBtn target={user.substring(1)} />;
-    }
-  };
-
-  const loadingPopUp = (username) => {
-    if (currentUser && username.substring(1) === currentUser.username) {
-      return (
-        <PopUp
-          title="Loading your story!"
-          message="Loading your profile"
-          loader={true}
-        />
-      );
-    }
-
-    return (
-      <PopUp
-        title={"Loading profile!"}
-        message={"Loading " + username + "'s profile!"}
-        loader={true}
-      />
-    );
-  };
-
-  const errorPopUp = (title, msg) => {
-    return (
-      <PopUp title={title} message={msg}>
-        <Btn onClick={() => navigate(-1)}>Go Back</Btn>
-      </PopUp>
-    );
-  };
 
   const loadCurrentUserProfile = async () => {
     // If loading your own profile, load quicker by using "cache"

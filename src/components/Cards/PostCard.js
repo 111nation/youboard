@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
+
 function PostCard(props) {
+  const navigate = useNavigate();
   const handleClick = () => {
     if (!props.id) return;
 
-    window.location.href = "/post/" + props.id;
+    navigate("/post/" + props.id);
   };
 
   let className = "post-card " + (props.image ? "loaded" : "");

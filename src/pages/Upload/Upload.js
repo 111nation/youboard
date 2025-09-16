@@ -6,8 +6,10 @@ import TopNav from "../../components/TopNav/TopNav";
 import "./Upload.css";
 import { Post } from "../../post";
 import PopUp from "../../components/PopUp/PopUp";
+import { useNavigate } from "react-router-dom";
 
 function Upload() {
+  const navigate = useNavigate();
   let [preview, setPreview] = useState("");
   let [popup, setPopUp] = useState(<></>);
 
@@ -39,13 +41,13 @@ function Upload() {
       await Post.createNew(photo, description, link);
       setPopUp(
         <PopUp title="Let's go viral!" message="Successfully #posted!">
-          <Btn onClick={() => (window.location.href = "/")}>Home</Btn>
+          <Btn onClick={() => navigate("/")}>Home</Btn>
         </PopUp>,
       );
     } catch (e) {
       setPopUp(
         <PopUp title="An error occurred!" message={e.code}>
-          <Btn onClick={() => (window.location.href = "/")}>Home</Btn>
+          <Btn onClick={() => navigate("/")}>Home</Btn>
         </PopUp>,
       );
     }

@@ -1,17 +1,59 @@
 .settings-wrap {
-	width: 100vw;
-	height: 93vh;
-	box-sizing: border-box;
-	overflow-y: auto;
+  width: 100vw;
+  height: 93vh;
+  box-sizing: border-box;
+  overflow-y: auto;
 }
 
 .settings-section {
-	width: 100vw;
-	box-sizing: border-box;
+  width: 100vw;
+  box-sizing: border-box;
 }
 
 .settings-section .hint {
-	font-weight: 600;
-	font-size: 1.1rem;
-	margin: 1em 0em 0.5em 1em;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 1em 0em 0.5em 1em;
+}
+
+.account-settings-page {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 2em;
+}
+
+.account-settings-page .profile {
+  width: 30vw;
+  box-sizing: border-box;
+  aspect-ratio: 1/1;
+  background-color: #f9f9f9;
+  border-radius: 50%;
+}
+
+.account-settings-page .handle {
+  margin: 0.5em 0;
+  font-size: 1.2em;
+}
+
+.account-settings-page .bio {
+  font-size: 0.9em;
+  margin: 0;
+  width: 75vw;
+  text-align: center;
+}
+
+.account-settings-page .select-photo-option {
+  margin: 1em 0 0.25em 0;
+  font-size: 1em;
+}
+
+.account-settings-page .edit {
+  width: 90%;
+  height: 17.5vh;
+}
+
+.account-settings-page .btn {
+  margin: 1.25em 0;
+  width: 90%;
 }
