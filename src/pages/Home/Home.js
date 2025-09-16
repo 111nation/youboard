@@ -52,6 +52,9 @@ function Home() {
     <div className="page home-page">
       <TopNav universityPage={universityPage} onClick={switchUniversityPage} />
       <Posts loading={loading} posts={posts} />
+      {!loading && posts.length === 0 && (
+        <p className="heading">Be the first to post!</p>
+      )}
       <HomeBar index={0} />
     </div>
   );

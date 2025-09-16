@@ -19,6 +19,7 @@ function PostView() {
   let [username, setUsername] = useState("");
   let [link, setLink] = useState("");
   let [followers, setFollowers] = useState(0);
+  let [hashtags, setHashtags] = useState("");
 
   useEffect(() => {
     const loadPost = async () => {
@@ -31,6 +32,7 @@ function PostView() {
       setLink(post.link);
       setUsername(user.username);
       setFollowers(followers);
+      setHashtags("#" + post.hashtags.join(" #"));
     };
 
     loadPost().catch(() => {
@@ -56,6 +58,7 @@ function PostView() {
           username={username}
           followers={followers}
           id={id}
+          hashtags={hashtags}
         />
 
         <Posts />

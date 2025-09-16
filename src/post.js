@@ -76,7 +76,7 @@ function generateDescriptionKeywords(str) {
     // Or is not a duplicate
     const trimmed = word.trim();
     for (let i = 0; i < trimmed.length; i++) {
-      for (let j = i + 4; j <= trimmed.length; j++) {
+      for (let j = i + 2; j <= trimmed.length; j++) {
         // keywords longer than 3 chars considered
         let keyword = trimmed.substr(i, j);
         keywords.add(keyword);
@@ -87,13 +87,35 @@ function generateDescriptionKeywords(str) {
   return Array.from(keywords);
 }
 
+function generateHashtags(str) {
+  // Extract hashtags from description
+  const words = str
+    .toLowerCase()
+    .replace(/\n/g, " ")
+    .replace(/[^a-zA-Z0-9 #]/g, "")
+    .split(" ")
+    .filter(Boolean); // Remove undefines or empty strings
+  let hashtags = new Set();
+
+  words.forEach((word) => {
+    const trimmed = word.trim();
+    if (trimmed[0] === "#" && trimmed.length > 1) {
+      // Ensure # proceeded with a letter
+      hashtags.add(trimmed.substring(1));
+    }
+  });
+
+  return Array.from(hashtags);
+}
+
 export class Post {
-  constructor(id, file, description, link, uid) {
+  constructor(id, file, description, link, uid, hashtags) {
     this.id = id;
     this.file = file;
     this.description = description;
     this.link = link;
     this.uid = uid;
+    this.hashtags = hashtags;
   }
 
   static async createNew(file, description, link) {
@@ -110,12 +132,15 @@ export class Post {
 
     if (compressedFile.size > 3e6) throw { code: POST_ERRORS.IMAGE_TOO_LARGE };
 
+    let hashtags = generateHashtags(description);
+
     // Create new document
     const docData = {
       uid: currentUser.uid,
       description: description,
       link: link,
       keywords: generateDescriptionKeywords(description),
+      hashtags: hashtags,
       createdAt: Timestamp.now(),
     };
 
@@ -131,6 +156,7 @@ export class Post {
         description,
         link,
         currentUser.uid,
+        hashtags,
       );
     } catch (e) {
       deleteDoc(docRef);
@@ -148,9 +174,10 @@ export class Post {
     let description = docSnap.data().description;
     let link = docSnap.data().link;
     let uid = docSnap.data().uid;
+    let hashtags = docSnap.data().hashtags;
 
     let file = await getImageFromId(post_id);
 
-    return new Post(post_id, file, description, link, uid);
+    return new Post(post_id, file, description, link, uid, hashtags);
   }
 }

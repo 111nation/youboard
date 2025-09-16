@@ -73,7 +73,10 @@ function Post(props) {
           <UserInfo username={props.username} followers={props.followers} />
           {control}
         </div>
-        <div className="post-desc">{props.description}</div>
+        <div className="post-desc">
+          {props.description}
+          <p className="hashtag">{props.hashtags}</p>
+        </div>
       </div>
     </>
   );
