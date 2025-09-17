@@ -17,7 +17,7 @@ const firebaseConfig = {
   messagingSenderId: "626670720462",
   appId: "1:626670720462:web:a1dacae81beb7401c1c79f",
   measurementId: "G-M5HKYZCSEL",
-	storageBucket: "gs://youboard-88661.firebasestorage.app",
+  storageBucket: "gs://youboard-88661.firebasestorage.app",
 };
 
 // Initialize Firebase
@@ -26,4 +26,3 @@ export const analytics = getAnalytics(app);
 export const auth = getAuth();
 export const db = getFirestore(app);
 export const storage = getStorage(app);
-

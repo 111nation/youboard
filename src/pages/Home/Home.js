@@ -6,6 +6,8 @@ import HomeBar from "../../components/NavBars/HomeBar";
 import { useEffect, useState } from "react";
 import { getHomePosts } from "../../results";
 import PopUp from "../../components/PopUp/PopUp";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../firebase";
 
 function TopNav(props) {
   let universityPage =
@@ -29,6 +31,10 @@ function TopNav(props) {
 }
 
 function Home() {
+  const navigate = useNavigate();
+
+  if (!auth.currentUser) navigate("/login");
+
   let [universityPage, setUniversityPage] = useState(false);
   let [posts, setPosts] = useState([]);
   let [loading, setLoading] = useState(true);
