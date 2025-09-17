@@ -5,6 +5,7 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import HomeBar from "../../components/NavBars/HomeBar";
 import { useEffect, useState } from "react";
 import { getHomePosts } from "../../results";
+import PopUp from "../../components/PopUp/PopUp";
 
 function TopNav(props) {
   let universityPage =
@@ -48,13 +49,32 @@ function Home() {
     getPosts();
   }, []);
 
+  function HomeTab() {
+    return (
+      <>
+        <Posts loading={loading} posts={posts} />
+        {!loading && posts.length === 0 && (
+          <p className="heading">Be the first to post!</p>
+        )}
+      </>
+    );
+  }
+
+  function UniversityTab() {
+    return (
+      <PopUp
+        title="Still working on it!"
+        message="This page has not been created yet!"
+      >
+        <Btn onClick={() => setUniversityPage(false)}>Go Back</Btn>
+      </PopUp>
+    );
+  }
+
   return (
     <div className="page home-page">
       <TopNav universityPage={universityPage} onClick={switchUniversityPage} />
-      <Posts loading={loading} posts={posts} />
-      {!loading && posts.length === 0 && (
-        <p className="heading">Be the first to post!</p>
-      )}
+      {universityPage ? <UniversityTab /> : <HomeTab />}
       <HomeBar index={0} />
     </div>
   );

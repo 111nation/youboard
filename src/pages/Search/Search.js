@@ -50,12 +50,9 @@ function Search() {
 
   let result = (
     <div className="profile-results">
-      {profile_results.map(
-        (user, i) => (
-          console.log(user),
-          (<ProfileResult key={i} username={user.username} icon={user.icon} />)
-        ),
-      )}
+      {profile_results.map((user, i) => (
+        <ProfileResult key={i} username={user.username} icon={user.icon} />
+      ))}
     </div>
   );
 

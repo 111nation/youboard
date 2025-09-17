@@ -40,6 +40,9 @@ function PostView() {
       setIcon(user.icon);
       if (post.hashtags.length > 0) setHashtags("#" + post.hashtags.join(" #"));
 
+      const container = document.getElementById("postview-page");
+      if (container) container.scrollTop = 0;
+
       setLoading(true);
       getRelatedPosts(post).then((result) => {
         setRelated(result);
@@ -57,12 +60,12 @@ function PostView() {
         </PopUp>,
       );
     });
-  }, []);
+  }, [id]);
 
   return (
     <>
       {popup}
-      <div className="page postview-page">
+      <div id="postview-page" className="page postview-page">
         <PostComponent
           image={image}
           description={description}

@@ -24,19 +24,6 @@ function Posts(props) {
       {posts.map((post, i) => (
         <PostCard image={URL.createObjectURL(post.file)} key={i} id={post.id} />
       ))}
-
-      {props.loading ? (
-        <>
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
-        </>
-      ) : (
-        ""
-      )}
     </div>
   );
 }
