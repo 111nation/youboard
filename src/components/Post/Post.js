@@ -67,7 +67,7 @@ function Post(props) {
         <div className="img-wrap">
           {!props.image && <div className="image-loader"></div>}
           <img src={props.image ? props.image : null} className="post-img" />
-          {props.link && <VisitBtn onClick={() => navigate(props.link)} />}
+          {props.link && <VisitBtn onClick={() => window.location.href=props.link} />}
         </div>
         <div className="user-info">
           <UserInfo
