@@ -1,6 +1,9 @@
 [
   {
-    "origin": ["http://localhost:3000/"],
+    "origin": [
+      "http://localhost:3000/",
+      "https://youboardapp.vercel.app/login"
+    ],
     "method": ["GET"],
     "maxAgeSeconds": 3600
   }
