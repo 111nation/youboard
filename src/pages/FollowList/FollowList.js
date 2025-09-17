@@ -73,12 +73,12 @@ function FollowList(props) {
             />
           ))}
         </div>
-        <HomeBar
+      </div>
+<HomeBar
           index={
             currentUser && user.substring(1) === currentUser.username ? 2 : -1
           }
         />
-      </div>
     </>
   );
 }
