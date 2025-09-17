@@ -1,57 +1,55 @@
 .search-page .subheading {
-	text-wrap: nowrap;
-	text-overflow:ellipsis;
-	overflow: hidden;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 
-	margin: 0;
-	padding: 0.75em 0.75em; 
+  margin: 0;
+  padding: 0.75em 0.75em;
 }
 
 .profile-results {
-	margin: 0;
-	padding: 0.5em;
-	width: 100vw;
-	height: 6rem;
-	box-sizing: border-box;
-	justify-content: flex-start;
+  margin: 0;
+  padding: 0.5em;
+  width: 100vw;
+  height: 6rem;
+  box-sizing: border-box;
+  justify-content: flex-start;
 
-	display: flex;
+  display: flex;
 
-	overflow-x: scroll;
+  overflow-x: scroll;
 }
 
 .result-profile-wrap {
-	height: 100%;
-	aspect-ratio: 1/1;
-	margin: 0 0.8em;
-	padding: 0;
+  height: 100%;
+  aspect-ratio: 1/1;
+  margin: 0 0.8em;
+  padding: 0;
 
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 
-	display: inline-flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: space-between;
-
-	border-radius: 2.5px;
-	transition: 0.15 ease-out;
+  border-radius: 2.5px;
+  transition: 0.15 ease-out;
 }
 
-.result-profile-wrap:active, .result-profile-wrap:focus {
-	background: rgba(41, 43, 44, 0.7);
+.result-profile-wrap:active,
+.result-profile-wrap:focus {
+  background: rgba(41, 43, 44, 0.7);
 }
 
 .result-profile-img {
-	height: 80%;
-	aspect-ratio: 1/1;
-	border-radius: 100%;
-	border: none;
-	box-sizing: border-box;
+  height: 80%;
+  aspect-ratio: 1/1;
+  border-radius: 100%;
+  border: none;
+  box-sizing: border-box;
 }
 
 .result-profile-wrap .handle {
-	font-size: 0.9rem;
-	margin-top: 0.2em;
-	font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 0.2em;
+  font-weight: 600;
 }
-
-

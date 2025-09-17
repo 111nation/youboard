@@ -109,25 +109,27 @@ function Profile() {
   }, []);
 
   return (
-    <div className="page profile-page">
-      {popup}
-      <div className="profile-info-wrap">
-        <BigProfile
-          username={username}
-          followers={followers}
-          following={following}
-          icon={icon}
-          bio={bio}
-        />
-        {getControl(user)}
-      </div>
+    <>
+      <div className="page profile-page">
+        {popup}
+        <div className="profile-info-wrap">
+          <BigProfile
+            username={username}
+            followers={followers}
+            following={following}
+            icon={icon}
+            bio={bio}
+          />
+          {getControl(user)}
+        </div>
 
-      <Posts posts={posts} />
-      <BackBtn />
+        <Posts posts={posts} />
+        <BackBtn />
+      </div>
       <HomeBar
         index={currentUser && username === currentUser.username ? 2 : -1}
       />
-    </div>
+    </>
   );
 }
 

@@ -57,15 +57,17 @@ function Search() {
   );
 
   return (
-    <div className="page search-page">
-      <div className="top-bar">
-        <SearchBar placeholder={query} />
-        <p className="subheading">{'"' + query + '"'}</p>
+    <>
+      <div className="page search-page">
+        <div className="top-bar">
+          <SearchBar placeholder={query} />
+          <p className="subheading">{'"' + query + '"'}</p>
+        </div>
+        {profile_results.length ? result : null}
+        <Posts posts={post_results} loading={loading} />
       </div>
-      {profile_results.length ? result : null}
-      <Posts posts={post_results} loading={loading} />
       <HomeBar />
-    </div>
+    </>
   );
 }
 

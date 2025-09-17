@@ -27,6 +27,16 @@ function PostView() {
   let [icon, setIcon] = useState("");
 
   useEffect(() => {
+    const container = document.getElementById("postview-page");
+    if (container) container.scrollTop = 0;
+    setImage("");
+    setDescription("");
+    setHashtags("");
+    setLink("");
+    setFollowers(0);
+    setUsername("");
+    setIcon("");
+
     const loadPost = async () => {
       let post = await Post.load(id);
       let user = await User.getFromUid(post.uid);
@@ -39,9 +49,6 @@ function PostView() {
       setFollowers(followers);
       setIcon(user.icon);
       if (post.hashtags.length > 0) setHashtags("#" + post.hashtags.join(" #"));
-
-      const container = document.getElementById("postview-page");
-      if (container) container.scrollTop = 0;
 
       setLoading(true);
       getRelatedPosts(post).then((result) => {
@@ -80,8 +87,8 @@ function PostView() {
         <p className="subheading">Discover</p>
         <Posts loading={loading} posts={related} />
         <BackBtn />
-        <HomeBar />
       </div>
+      <HomeBar />
     </>
   );
 }

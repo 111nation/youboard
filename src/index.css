@@ -37,8 +37,7 @@ body {
 }
 
 .page {
-  /*height: 100vh;*/
-  height: 90vh;
+  height: 100vh;
   overflow-x: hidden;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;

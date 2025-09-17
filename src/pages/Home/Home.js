@@ -78,11 +78,16 @@ function Home() {
   }
 
   return (
-    <div className="page home-page">
-      <TopNav universityPage={universityPage} onClick={switchUniversityPage} />
-      {universityPage ? <UniversityTab /> : <HomeTab />}
+    <>
+      <div className="page home-page">
+        <TopNav
+          universityPage={universityPage}
+          onClick={switchUniversityPage}
+        />
+        {universityPage ? <UniversityTab /> : <HomeTab />}
+      </div>
       <HomeBar index={0} />
-    </div>
+    </>
   );
 }
 
