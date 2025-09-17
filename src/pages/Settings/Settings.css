@@ -29,6 +29,26 @@
   aspect-ratio: 1/1;
   background-color: #f9f9f9;
   border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.account-settings-page .profile img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1/1;
+  box-sizing: border-box;
+  object-fit: cover;
+}
+
+.account-settings-page .profile input[type="file"] {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .account-settings-page .handle {
@@ -51,6 +71,8 @@
 .account-settings-page .edit {
   width: 90%;
   height: 17.5vh;
+  text-align: left;
+  font-size: 1em;
 }
 
 .account-settings-page .btn {

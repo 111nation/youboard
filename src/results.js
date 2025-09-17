@@ -9,7 +9,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "./firebase";
-import { currentUser, User } from "./user";
+import { currentUser, getProfilePhoto, User } from "./user";
 import { getImageFromId, Post } from "./post";
 
 export async function searchForProfiles(searchQuery) {
@@ -25,10 +25,19 @@ export async function searchForProfiles(searchQuery) {
 
   const querySnapshot = await getDocs(q);
 
-  const result = querySnapshot.docs.map((doc) => {
-    const data = doc.data();
-    return new User(doc.id, data.username, data.email, doc);
-  });
+  const result = await Promise.all(
+    querySnapshot.docs.map(async (doc) => {
+      const data = doc.data();
+      return new User(
+        doc.id,
+        data.username,
+        data.email,
+        doc,
+        await getProfilePhoto(doc.id),
+        data.bio,
+      );
+    }),
+  );
 
   const notCurrentUser = (user) => {
     return user.username !== currentUser.username;
@@ -65,7 +74,23 @@ export async function searchForPosts(searchQuery) {
 }
 
 export async function getHomePosts() {
-  const q = query(collection(db, "posts"), limit(100), orderBy("createdAt"));
+  let q;
+
+  if (currentUser) {
+    q = query(
+      collection(db, "posts"),
+      where("uid", "!=", currentUser.uid),
+      orderBy("uid"),
+      orderBy("createdAt", "desc"),
+      limit(100),
+    );
+  } else {
+    q = query(
+      collection(db, "posts"),
+      orderBy("createdAt", "desc"),
+      limit(100),
+    );
+  }
   const querySnapshot = await getDocs(q);
 
   const result = await Promise.all(
@@ -80,7 +105,13 @@ export async function getHomePosts() {
 }
 
 export async function getUserPosts(uid) {
-  const q = query(collection(db, "posts"), where("uid", "==", uid), limit(50));
+  const q = query(
+    collection(db, "posts"),
+    where("uid", "==", uid),
+    orderBy("uid"),
+    orderBy("createdAt", "desc"),
+    limit(50),
+  );
   const querySnapshot = await getDocs(q);
 
   // Return result as array of Post class's objects

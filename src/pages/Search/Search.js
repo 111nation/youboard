@@ -2,20 +2,23 @@ import "./Search.css";
 import HomeBar from "../../components/NavBars/HomeBar";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Posts from "../../components/Cards/Posts";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { searchForPosts, searchForProfiles } from "../../results";
 import { useEffect, useState } from "react";
-import { Post } from "../../post";
 
 function ProfileResult(props) {
+  const navigate = useNavigate();
   const onClick = () => {
     if (!props.username) return;
-    window.location.href = "/@" + props.username;
+    navigate("/@" + props.username);
   };
 
   return (
     <div onClick={onClick} className="result-profile-wrap">
-      <img className="result-profile-img profile" />
+      <img
+        src={!props.icon ? null : URL.createObjectURL(props.icon)}
+        className="result-profile-img profile"
+      />
       <p className="handle">{"@" + props.username}</p>
     </div>
   );
@@ -47,9 +50,12 @@ function Search() {
 
   let result = (
     <div className="profile-results">
-      {profile_results.map((user, i) => (
-        <ProfileResult key={i} username={user.username} />
-      ))}
+      {profile_results.map(
+        (user, i) => (
+          console.log(user),
+          (<ProfileResult key={i} username={user.username} icon={user.icon} />)
+        ),
+      )}
     </div>
   );
 

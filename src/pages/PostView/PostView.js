@@ -1,7 +1,6 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import BackBtn from "../../components/Buttons/BackBtn";
 import Posts from "../../components/Cards/Posts";
-import SaveBar from "../../components/NavBars/SaveBar";
 import PostComponent from "../../components/Post/Post";
 import "./PostView.css";
 import { useEffect, useState } from "react";
@@ -14,6 +13,7 @@ import { getRelatedPosts } from "../../results";
 import HomeBar from "../../components/NavBars/HomeBar";
 
 function PostView() {
+  const navigate = useNavigate();
   const { id } = useParams();
   let [popup, setPopUp] = useState(<></>);
   let [image, setImage] = useState("");
@@ -24,6 +24,7 @@ function PostView() {
   let [hashtags, setHashtags] = useState("");
   let [loading, setLoading] = useState(false);
   let [related, setRelated] = useState([]);
+  let [icon, setIcon] = useState("");
 
   useEffect(() => {
     const loadPost = async () => {
@@ -36,7 +37,8 @@ function PostView() {
       setLink(post.link);
       setUsername(user.username);
       setFollowers(followers);
-      setHashtags("#" + post.hashtags.join(" #"));
+      setIcon(user.icon);
+      if (post.hashtags.length > 0) setHashtags("#" + post.hashtags.join(" #"));
 
       setLoading(true);
       getRelatedPosts(post).then((result) => {
@@ -51,7 +53,7 @@ function PostView() {
           title="No awesome content!"
           message="Are you sure this post exists?"
         >
-          <Btn onClick={() => window.history.back()}>Go Back</Btn>
+          <Btn onClick={() => navigate(-1)}>Go Back</Btn>
         </PopUp>,
       );
     });
@@ -69,6 +71,7 @@ function PostView() {
           followers={followers}
           id={id}
           hashtags={hashtags}
+          icon={icon}
         />
 
         <p className="subheading">Discover</p>

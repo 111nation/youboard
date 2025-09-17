@@ -22,10 +22,10 @@ export const POST_ERRORS = {
   POST_DOES_NOT_EXIST: "Post does not exists",
 };
 
-export async function compressImage(image) {
+async function compressImage(image) {
   let promise = new Promise((resolve, reject) => {
     new Compressor(image, {
-      quality: 0.8,
+      quality: 0.6,
       convertTypes: ["image/png", "image/webp"],
       convertSize: 3e6,
       success(result) {
@@ -120,8 +120,6 @@ export class Post {
   }
 
   static async createNew(file, description, link) {
-    // Check if firebase storage is full
-
     if (!file.type.includes("image/"))
       throw { code: POST_ERRORS.INVALID_FILETYPE };
     if (description.length > 200)

@@ -20,7 +20,7 @@ function Upload() {
     setPreview(URL.createObjectURL(photo));
   };
 
-  const onSumbit = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
@@ -57,7 +57,7 @@ function Upload() {
     <>
       {popup}
       <TopNav title="Upload" />
-      <form onSubmit={(e) => onSumbit(e)} className="upload-wrap">
+      <form onSubmit={(e) => onSubmit(e)} className="upload-wrap">
         <div className="upload-photo">
           {preview && <img src={preview} />}
           <input

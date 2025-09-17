@@ -13,7 +13,10 @@ function SmallProfile(props) {
 
   return (
     <div onClick={handleClick} className="user-info-wrap">
-      <img className="profile" />
+      <img
+        src={!props.icon ? null : URL.createObjectURL(props.icon)}
+        className="profile"
+      />
       <div className="info-wrap">
         <p className="handle">{"@" + username}</p>
         <p className="follower-count">{followers} Followers</p>

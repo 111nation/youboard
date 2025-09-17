@@ -1,92 +1,95 @@
 .handle {
-	font-weight: 700;
-	margin: 0;
+  font-weight: 700;
+  margin: 0;
 }
 
 .follower-count {
-	margin: 0;
+  margin: 0;
 }
 
 .profile {
-	border-radius: 50%;
-	background: #f9f9f9;
-	aspect-ratio: 1/1;
-	margin: 0;
-	box-sizing: border-box;
+  border-radius: 50%;
+  background: #f9f9f9;
+  aspect-ratio: 1/1;
+  margin: 0;
+  box-sizing: border-box;
+  object-fit: cover;
 }
 
 .big-profile-wrap {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	margin: auto;
-	margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: auto;
+  margin: 0;
 }
 
 .big-profile-wrap .profile {
-	width: 6em;
+  width: 6em;
 }
 
 .big-profile-wrap .handle {
-	margin: 0.5em 0 0.2em;
-	font-size: 1.2rem;
+  margin: 0.5em 0 0.2em;
+  font-size: 1.2rem;
 }
 
 .big-profile-wrap .follower-count {
-	margin-top: 0.5em;
+  margin-top: 0.5em;
 }
 
 .small-profile-wrap {
-	display: flex;
-	align-items: center;
-	flex-direction: row;
-	width: 100%;
-	transition: 0.15s ease-out;
-	padding: 0.5em;
-	box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  transition: 0.15s ease-out;
+  padding: 0.5em;
+  box-sizing: border-box;
 }
 
 .small-profile-wrap .profile {
-	height: 4em;
+  height: 4em;
 }
 
 .small-profile-wrap .info-wrap {
-	padding-left: 0.75em;
+  padding-left: 0.75em;
 }
 
 .small-profile-wrap .handle {
-	font-size: 1.1rem;
+  font-size: 1.1rem;
 }
 
 .small-profile-wrap .follower-count {
-	font-size: 0.8rem;
+  font-size: 0.8rem;
 }
 
-.small-profile-wrap:focus, .small-profile-wrap:active {
-	background: rgba(41, 43, 44, 0.7);
+.small-profile-wrap:focus,
+.small-profile-wrap:active {
+  background: rgba(41, 43, 44, 0.7);
 }
 
 .user-info-wrap {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
-.user-info-wrap:focus, .user-info-wrap:active {
-	transition: 0.15s ease-out;
-	background: rgba(41, 43, 44, 0.7);
+.user-info-wrap:focus,
+.user-info-wrap:active {
+  transition: 0.15s ease-out;
+  background: rgba(41, 43, 44, 0.7);
 }
 
 .user-info-wrap .profile {
-	width: 15vw;
-	margin-right: 0.7em;
+  width: 15vw;
+  margin-right: 0.7em;
 }
 
 .user-info-wrap .handle {
-	font-size: 1rem;
+  font-size: 1rem;
 }
 
 .user-info-wrap .follower-count {
-	font-size: 0.8rem;
+  font-size: 0.8rem;
 }

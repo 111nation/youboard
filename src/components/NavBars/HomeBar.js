@@ -63,6 +63,12 @@ function HomeBar(props) {
     navigate("/upload");
   };
 
+  const getIcon = () => {
+    if (!currentUser) return null;
+    if (!currentUser.icon) return null;
+    return URL.createObjectURL(currentUser.icon);
+  };
+
   return (
     <>
       {popup}
@@ -102,6 +108,7 @@ function HomeBar(props) {
         </svg>
 
         <img
+          src={getIcon()}
           onClick={openProfile}
           style={{ borderColor: icon_color[2] }}
           className="profile"

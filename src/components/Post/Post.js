@@ -7,8 +7,10 @@ import "./Post.css";
 import { currentUser } from "../../user";
 import { deletePost } from "../../post";
 import PopUp from "../PopUp/PopUp";
+import { useNavigate } from "react-router-dom";
 
 function Post(props) {
+  const navigate = useNavigate();
   let [control, setControl] = useState(<></>);
   let [popup, setPopUp] = useState(<></>);
 
@@ -23,12 +25,12 @@ function Post(props) {
 
     try {
       await deletePost(props.id);
-      window.location.href = "/";
+      navigate("/");
       setPopUp(<></>);
     } catch (_) {
       setPopUp(
         <PopUp title="Failed!" message="Failed to delete post!">
-          <Btn onClick={() => (window.location.href = "/")}>Home</Btn>
+          <Btn onClick={() => navigate("/")}>Home</Btn>
         </PopUp>,
       );
     }
@@ -65,12 +67,14 @@ function Post(props) {
         <div className="img-wrap">
           {!props.image && <div className="image-loader"></div>}
           <img src={props.image ? props.image : null} className="post-img" />
-          {props.link && (
-            <VisitBtn onClick={() => (window.location.href = props.link)} />
-          )}
+          {props.link && <VisitBtn onClick={() => navigate(props.link)} />}
         </div>
         <div className="user-info">
-          <UserInfo username={props.username} followers={props.followers} />
+          <UserInfo
+            username={props.username}
+            followers={props.followers}
+            icon={props.icon}
+          />
           {control}
         </div>
         <div className="post-desc">

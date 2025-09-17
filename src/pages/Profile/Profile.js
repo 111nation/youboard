@@ -21,6 +21,8 @@ function Profile() {
   let [followers, setFollowers] = useState(0);
   let [following, setFollowing] = useState(0);
   let [posts, setPosts] = useState([]);
+  let [bio, setBio] = useState("");
+  let [icon, setIcon] = useState(null);
 
   const onSettingsClick = () => {
     navigate("/settings");
@@ -69,29 +71,8 @@ function Profile() {
     );
   };
 
-  const loadCurrentUserProfile = async () => {
-    // If loading your own profile, load quicker by using "cache"
-    const [[followers, following], posts] = await Promise.all([
-      followersAndFollowingCount(currentUser.uid), // Followers
-      getUserPosts(currentUser.uid), // Posts
-    ]);
-
-    setUsername(currentUser.username);
-    setFollowers(followers);
-    setFollowing(following);
-    setPosts(posts);
-  };
-
   const loadUser = async () => {
     setPopUp(loadingPopUp(user));
-
-    if (currentUser && user.substring(1) === currentUser.username) {
-      console.log("HEY");
-      await loadCurrentUserProfile();
-      setPopUp(<></>);
-      return;
-    }
-
     let result = await User.getFromUsername(user.substring(1));
 
     const [[followers, following], posts] = await Promise.all([
@@ -99,6 +80,8 @@ function Profile() {
       getUserPosts(result.uid), // Posts
     ]);
 
+    setBio(result.bio);
+    setIcon(result.icon);
     setUsername(result.username);
     setFollowers(followers);
     setFollowing(following);
@@ -133,6 +116,8 @@ function Profile() {
           username={username}
           followers={followers}
           following={following}
+          icon={icon}
+          bio={bio}
         />
         {getControl(user)}
       </div>
