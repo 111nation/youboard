@@ -63,7 +63,6 @@ In order to form a for you page (home page), display all user posts as well as s
   <tr>
     <td width="40%">
      <h4>Phone Demo</h4>
-      
     </td>
     <td width="40%">
        <video src="https://github.com/user-attachments/assets/09cfeb77-971a-457a-b1ea-b58f79272bed"></video>
