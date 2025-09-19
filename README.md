@@ -66,6 +66,7 @@ In order to form a for you page (home page), display all user posts as well as s
       <video src="https://github.com/user-attachments/assets/d9041f43-e762-466c-bf64-1b39833e566e"></video>
     </td>
     <td width="40%">
+      <h4>Log In Demo</h4>
        <video src="https://github.com/user-attachments/assets/09cfeb77-971a-457a-b1ea-b58f79272bed"></video>
     </td>
   </tr>
