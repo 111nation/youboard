@@ -4,7 +4,7 @@
 
 ##### Leave a star while you are here :)
 
-https://youboardapp.vercel.app/
+**Website**: https://youboardapp.vercel.app/
 
 <video height="200px" src="https://github.com/user-attachments/assets/21bdf6af-9761-4b05-8d51-53a9b3353e9e"></video>
 
