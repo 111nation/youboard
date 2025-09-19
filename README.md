@@ -39,9 +39,6 @@ _Various stages done in order to create the UI and UX experience_
 </tr>
 </table>
 
-### Setting Up 
-Make sure you have `npm` installed and run `npm start` to start the React project.
-
 ### First Viral Post?
 
 _Seems like the X algorithm really liked my designs!_
