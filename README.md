@@ -2,6 +2,11 @@
 
 <i align="center">a student focused social media inspired by pinterest</i>
 
+<video height="200px" src="https://github.com/user-attachments/assets/21bdf6af-9761-4b05-8d51-53a9b3353e9e"></video>
+
+
+
+
 ### Idea 
 youboard. is a pinterest-like social media targetted towards students who want to share their `#studentliving` life and want to have a platform to meet other students on/off campus.
 
@@ -46,5 +51,26 @@ Each user is allocated their own document corresponding to their `uid` under the
 
 All existing users' information can be viewed under the `src/pages/Profile/Profile.js` page, which is routed under `/:user`. For example, `/@dualipa` will open the page of *dualipa*. The *Profile page* loads the user's information **once**, then passes it down to child elements, for example, `src/components/Profiles/BigProfile.js`. This data gets passed down instead of being reread from the database. There might be multiple sub-components that take up their own read request! Pop-ups will be used to guide users through errors or loading. The pop-up component is under `src/components/PopUp/PopUp.js`
 
-<div width="40%"><video src="https://github.com/user-attachments/assets/09cfeb77-971a-457a-b1ea-b58f79272bed"></video></div>
+### Generating content
+
+Each post is stored under `/posts/` in the Firestore Database. The document ID corresponds to the post ID. Every image post is compressed before it is sent to the Firebase Storage bucket. These images are stored under `/images/` with their respective post IDs. Posts can be viewed under the `/post/:id` route. `posts.js` handles all processing of creating a Post object and retrieving and uploading posts. 
+
+In order to form a for you page (home page), display all user posts as well as search for posts, `results.js` handles all requests to fetch posts, user accounts and catalogues of content.
+
+
+
+<table>
+  <tr>
+    <td width="40%">
+     <h4>Phone Demo</h4>
+      
+    </td>
+    <td width="40%">
+       <video src="https://github.com/user-attachments/assets/09cfeb77-971a-457a-b1ea-b58f79272bed"></video>
+    </td>
+  </tr>
+</table>
+
+
+
 
