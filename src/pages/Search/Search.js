@@ -33,8 +33,8 @@ function Search() {
   const getResults = async () => {
     setLoading(true);
     let [profile_results, post_results] = await Promise.all([
-      searchForProfiles(query),
-      searchForPosts(query),
+      searchForProfiles(query.toLowerCase()),
+      searchForPosts(query.toLowerCase()),
     ]);
 
     setProfileResult(profile_results);

@@ -1,34 +1,21 @@
 import { db } from "./firebase";
 import { collection, query, where, getDocs, limit } from "firebase/firestore";
 import { setCurrentUser, User } from "./user";
+import { useFormAction } from "react-router-dom";
 
 export let logInErrorMessage = "";
 
 export function validatePassword(password) {
   let valid = true;
 
-  let numberPresent = false;
-  let numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-  for (let x of password) {
-    if (numbers.includes(x)) {
-      numberPresent = true;
-      break;
-    }
-  }
-
   if (password.trim() !== password) {
     valid = false;
     logInErrorMessage += "Remove spaces or tabs in your password.\n";
   }
 
-  if (password.length < 8 || password.length > 16) {
+  if (password.length < 8 || password.length > 32) {
     valid = false;
-    logInErrorMessage += "Password must be 8-16 characters long.\n";
-  }
-
-  if (!numberPresent) {
-    valid = false;
-    logInErrorMessage += "Password must contain a number.\n";
+    logInErrorMessage += "Password must be 8-32 characters long.\n";
   }
 
   return valid;
@@ -49,6 +36,11 @@ async function uniqueUsername(username) {
 
 export function validateUsername(username) {
   let valid = true;
+
+  if (username.trim() !== username) {
+    valid = false;
+    logInErrorMessage += "Remove spaces or tabs in your username.\n";
+  }
 
   if (username.length < 3 || username.length > 20) {
     valid = false;

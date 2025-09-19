@@ -16,8 +16,8 @@ function LogIn() {
     setWarning("");
 
     const formData = new FormData(e.target);
-    let username = formData.get("username");
-    let email = formData.get("email");
+    let username = formData.get("username").toLowerCase();
+    let email = formData.get("email").toLowerCase();
     let password = formData.get("password");
 
     signUp(username, email, password)
@@ -44,7 +44,7 @@ function LogIn() {
     setWarning("");
 
     const formData = new FormData(e.target);
-    let username = formData.get("username");
+    let username = formData.get("username").toLowerCase();
     let password = formData.get("password");
 
     signIn(username, password)
