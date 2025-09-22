@@ -85,8 +85,8 @@ function Home() {
           onClick={switchUniversityPage}
         />
         {universityPage ? <UniversityTab /> : <HomeTab />}
-        <HomeBar index={0} />
       </div>
+        <HomeBar index={0} />
     </>
   );
 }
