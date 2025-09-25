@@ -86,7 +86,7 @@ function Home() {
         />
         {universityPage ? <UniversityTab /> : <HomeTab />}
       </div>
-        <HomeBar index={0} />
+      <HomeBar index={0} />
     </>
   );
 }

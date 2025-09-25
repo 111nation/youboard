@@ -12,8 +12,7 @@ body {
   background: #121212;
   padding: 0;
   margin: 0;
-  overflow: hidden;
-  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .heading {
@@ -38,8 +37,8 @@ body {
 }
 
 .page {
-  height: 100vh;
-  overflow: hidden;
+  height: auto;
+  min-height: 100vh;
 }
 
 .page .top-bar {
